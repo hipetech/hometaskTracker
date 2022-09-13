@@ -1,0 +1,7 @@
+.subjectItemsSection {
+  display: grid;
+  grid-template-columns: repeat(3, 433px);
+  column-gap: 30px;
+  row-gap: 19px;
+  margin: 18px auto;
+}

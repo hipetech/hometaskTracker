@@ -28,7 +28,63 @@ export default class SubjectService {
                     {id: "task3", name: "Task 3", status: TaskStatus.toDo}
                 ],
                 colors: {fontColor: "#C85959", backgroundColor: "#EEDBDB"}
+            },
+            {
+                id: "DevOps",
+                name: "Development & Operations",
+                teachers: ["John Woo"],
+                tasks: [
+                    {id: "task1", name: "Task 1", status: TaskStatus.toDo},
+                    {id: "task2", name: "Task 2", status: TaskStatus.inProcess},
+                    {id: "task3", name: "Task 3", status: TaskStatus.toDo}
+                ],
+                colors: {fontColor: "#C85959", backgroundColor: "#EEDBDB"}
+            },
+            {
+                id: "DevOps",
+                name: "Development & Operations",
+                teachers: ["John Woo"],
+                tasks: [
+                    {id: "task1", name: "Task 1", status: TaskStatus.toDo},
+                    {id: "task2", name: "Task 2", status: TaskStatus.inProcess},
+                    {id: "task3", name: "Task 3", status: TaskStatus.toDo}
+                ],
+                colors: {fontColor: "#C85959", backgroundColor: "#EEDBDB"}
+            },
+            {
+                id: "DevOps",
+                name: "Development & Operations",
+                teachers: ["John Woo"],
+                tasks: [
+                    {id: "task1", name: "Task 1", status: TaskStatus.toDo},
+                    {id: "task2", name: "Task 2", status: TaskStatus.inProcess},
+                    {id: "task3", name: "Task 3", status: TaskStatus.toDo}
+                ],
+                colors: {fontColor: "#C85959", backgroundColor: "#EEDBDB"}
+            },
+            {
+                id: "DevOps",
+                name: "Development & Operations",
+                teachers: ["John Woo"],
+                tasks: [
+                    {id: "task1", name: "Task 1", status: TaskStatus.toDo},
+                    {id: "task2", name: "Task 2", status: TaskStatus.inProcess},
+                    {id: "task3", name: "Task 3", status: TaskStatus.toDo}
+                ],
+                colors: {fontColor: "#C85959", backgroundColor: "#EEDBDB"}
+            },
+            {
+                id: "DevOps",
+                name: "Development & Operations",
+                teachers: ["John Woo"],
+                tasks: [
+                    {id: "task1", name: "Task 1", status: TaskStatus.toDo},
+                    {id: "task2", name: "Task 2", status: TaskStatus.inProcess},
+                    {id: "task3", name: "Task 3", status: TaskStatus.toDo}
+                ],
+                colors: {fontColor: "#C85959", backgroundColor: "#EEDBDB"}
             }
+
         ];
 
         return new Promise((resolve) => setTimeout(() => resolve(subjects), 1000));
