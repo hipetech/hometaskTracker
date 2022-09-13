@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import "./subjectsHeading.scss";
 
 type SubjectsHeadingProps = {
@@ -7,22 +7,33 @@ type SubjectsHeadingProps = {
 
 const SubjectsHeading: React.FC<SubjectsHeadingProps> = ({fontColor}) => {
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const fontStyle: object = {
         color: fontColor
     };
 
-    const searchCircleStyle = {
+    const searchCircleStyle: object = {
         boxShadow: `0 0 0 3px ${fontColor}`
     };
 
-    const searchStyle = {
+    const searchStyle: object = {
         backgroundColor: fontColor
     };
 
-    const searchInputStyle = {
+
+    const searchInputStyle: object = {
         borderBottom: `2px solid ${fontColor}`
     };
+
+    function toggleSearchInput(): void {
+        setIsSearchOpen(!isSearchOpen);
+        if (inputRef.current && !isSearchOpen) {
+            inputRef.current.focus();
+        } else if (inputRef.current && isSearchOpen){
+            inputRef.current.blur();
+        }
+    }
 
     return (
         <>
@@ -37,12 +48,17 @@ const SubjectsHeading: React.FC<SubjectsHeadingProps> = ({fontColor}) => {
                     <button className={"removeButton"}>
                         Remove
                     </button>
-                    <input type="text" placeholder={"Search.."} className={"searchInput"} style={searchInputStyle} />
-                    <button className={"searchButton"}>
+                    <input type="text" placeholder={"Search.."}
+                           className={`searchInput ${isSearchOpen ? "showInput" : "hideInput"}`}
+                           style={searchInputStyle}
+                           ref={inputRef}
+                    />
+                    <button className={"searchButton"} onClick={toggleSearchInput}>
                         <span className={"searchButtonCircle"} style={searchCircleStyle}></span>
                         <span className={"searchButtonSquare"} style={searchStyle}></span>
                     </button>
                 </div>
+                <div className="searchInputCover"></div>
             </header>
         </>
     );
