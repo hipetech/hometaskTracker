@@ -1,0 +1,46 @@
+.subjectItemSection {
+  width: 385px;
+  height: 130px;
+  border-radius: 26px;
+  padding: 25px 24px;
+
+  h3 {
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0 0 11px;
+  }
+
+  h4 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition-duration: 0.4s;
+}
+
+.subjectInfo {
+  width: 75%;
+}
+
+.subjectCounter {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    margin: 0;
+    font-size: 71px;
+    font-weight: 30;
+  }
+}
+
+.subjectItemSection:hover {
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.26);
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
