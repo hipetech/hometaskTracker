@@ -3,6 +3,7 @@ import Subject from "../../types/Subject";
 import Color from "../../types/Color";
 import SubjectsHeading from "../../components/subjectHeading/subjectsHeading";
 import SubjectItems from "../../components/subjectItems/subjectItems";
+import LoadingAnimation from "../../components/loadingAnimation/loadingAnimation";
 
 type subjectPageProps = {
     getRandomColor: () => Color
@@ -21,7 +22,7 @@ const SubjectPage: React.FC<subjectPageProps> = (props) => {
                     isLoading ? <SubjectsHeading fontColor={getRandomColor().fontColor}/> : ""
                 }
                 {
-                    isLoading ? <SubjectItems subjects={subjects}/> : ""
+                    isLoading ? <SubjectItems subjects={subjects}/> : <LoadingAnimation />
                 }
             </section>
         </>
