@@ -11,23 +11,28 @@ function App() {
     const [subjects, setSubjects] = useState<Subject[]>([]);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSearching, setIsSearching] = useState<boolean>(false);
 
     const subjectService: SubjectService = new SubjectService();
 
-    function onRequestSubjects(): void {
+    const onRequestSubjects = (): void => {
         subjectService.getSubjects()
             .then(setSubjects)
             .then(() => setIsLoading(true));
-    }
+    };
 
-    function onRequestColors(): void {
+    const onRequestColors = (): void => {
         subjectService.getColors()
             .then(setColors);
-    }
+    };
 
-    function getRandomColor(): Color {
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
+    const filterItemsOnSearching = (searchingInput: string): Subject[] => {
+        return subjects.filter(item => {
+            return item.name.indexOf(searchingInput) > -1;
+        });
+    };
+
+    const getRandomColor = (): Color => colors[Math.floor(Math.random() * colors.length)];
 
     useEffect(onRequestColors, []);
     useEffect(onRequestSubjects, []);
@@ -37,7 +42,7 @@ function App() {
             <Routes>
                 <Route path={"/"}
                        element={<SubjectPage getRandomColor={getRandomColor}
-                                             subjects={subjects}
+                                             subjects={isSearching ? filterItemsOnSearching("hello") : subjects}
                                              setSubjects={setSubjects}
                                              isLoading={isLoading}
 
