@@ -30,7 +30,7 @@ export default class SubjectService {
                 colors: {fontColor: "#157760", backgroundColor: "#8DDECA"}
             },
             {
-                id: "DevOps",
+                id: "DevOps1",
                 name: "Development & Operations",
                 teachers: ["John Woo"],
                 tasks: [
@@ -41,7 +41,7 @@ export default class SubjectService {
                 colors: {fontColor: "#9B2E2E", backgroundColor: "#EEDBDB"}
             },
             {
-                id: "DevOps",
+                id: "DevOps2",
                 name: "Development & Operations",
                 teachers: ["John Woo"],
                 tasks: [
@@ -52,7 +52,7 @@ export default class SubjectService {
                 colors: {fontColor: "#05658E", backgroundColor: "#99D4EE"}
             },
             {
-                id: "DevOps",
+                id: "DevOps3",
                 name: "Development & Operations",
                 teachers: ["John Woo"],
                 tasks: [
@@ -63,7 +63,7 @@ export default class SubjectService {
                 colors: {fontColor: "#4F4FB9", backgroundColor: "#DBDBEE"}
             },
             {
-                id: "DevOps",
+                id: "DevOps4",
                 name: "Development & Operations",
                 teachers: ["John Woo"],
                 tasks: [
@@ -74,7 +74,7 @@ export default class SubjectService {
                 colors: {fontColor: "#000000", backgroundColor: "#F0F0F0"}
             },
             {
-                id: "DevOps",
+                id: "DevOps5",
                 name: "Development & Operations",
                 teachers: ["John Woo"],
                 tasks: [

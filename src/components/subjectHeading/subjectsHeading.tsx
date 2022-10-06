@@ -1,13 +1,16 @@
 import React, {useRef, useState} from "react";
 import "./subjectsHeading.scss";
+import Color from "../../types/Color";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
-type SubjectsHeadingProps = {
-    fontColor: string
-};
-
-const SubjectsHeading: React.FC<SubjectsHeadingProps> = ({fontColor}) => {
+const SubjectsHeading: React.FC = () => {
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    const {colors} = useTypedSelector(state => state.subject);
+
+    const getRandomColor = (): Color => colors[Math.floor(Math.random() * colors.length)];
+
+    const fontColor = getRandomColor().fontColor;
 
     const fontStyle: object = {
         color: fontColor

@@ -2,18 +2,14 @@ import React from "react";
 import "./subjectsitems.scss";
 import Subject from "../../types/Subject";
 import SubjectItem from "../subjectItem/subjectItem";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
-type SubjectItemsProps = {
-    subjects: Subject[]
-};
+const SubjectItems:React.FC= () => {
+    const {subjects} = useTypedSelector(state => state.subject);
 
-const SubjectItems:React.FC<SubjectItemsProps> = ({subjects}) => {
-
-    function renderSubjectItems(): JSX.Element[] {
-        return subjects.map((elem: Subject) => {
-            return (<SubjectItem subject={elem} key={elem.id} />);
-        });
-    }
+    const renderSubjectItems = (): JSX.Element[] => subjects.map((elem: Subject) => {
+        return (<SubjectItem subject={elem} key={elem.id}/>);
+    });
 
     return (
         <>

@@ -1,28 +1,20 @@
 import React from "react";
-import Subject from "../../types/Subject";
-import Color from "../../types/Color";
 import SubjectsHeading from "../../components/subjectHeading/subjectsHeading";
 import SubjectItems from "../../components/subjectItems/subjectItems";
 import LoadingAnimation from "../../components/loadingAnimation/loadingAnimation";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
-type subjectPageProps = {
-    getRandomColor: () => Color
-    subjects: Subject[],
-    setSubjects: (subjects: Subject[]) => void,
-    isLoading: boolean
-}
-
-const SubjectPage: React.FC<subjectPageProps> = (props) => {
-    const {subjects, setSubjects, getRandomColor, isLoading} = props;
+const SubjectPage: React.FC = () => {
+    const {isLoading} = useTypedSelector(state => state.subject);
 
     return (
         <>
             <section className="subjectPageSection">
                 {
-                    isLoading ? <SubjectsHeading fontColor={getRandomColor().fontColor}/> : ""
+                    isLoading ? <SubjectsHeading /> : ""
                 }
                 {
-                    isLoading ? <SubjectItems subjects={subjects}/> : <LoadingAnimation />
+                    isLoading ? <SubjectItems /> : <LoadingAnimation />
                 }
             </section>
         </>
