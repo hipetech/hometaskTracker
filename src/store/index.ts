@@ -1,6 +1,13 @@
-import {createStore} from "redux";
-import rootReducer from "./reducers";
+import {configureStore} from "@reduxjs/toolkit";
+import SubjectSlice from "./reducers/subjectSlice";
 
-const store = createStore(rootReducer);
 
+const store = configureStore({
+    reducer: {
+        subject: SubjectSlice.reducer
+    }
+});
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 export default store;

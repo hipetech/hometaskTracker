@@ -1,14 +1,14 @@
-import {useDispatch} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as subjectActions from "../store/actions/subjectActions";
+import SubjectSlice from "../store/reducers/subjectSlice";
+import {useAppDispatch} from "./useAppDispatch";
 
 const actions = {
-    ...subjectActions
+    ...SubjectSlice.actions
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useActions = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     return bindActionCreators(actions, dispatch);
 };
 
