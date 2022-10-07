@@ -1,16 +1,15 @@
 import React, {useRef, useState} from "react";
 import "./subjectsHeading.scss";
-import Color from "../../types/Color";
 import {useAppSelector} from "../../hooks/useAppSelector";
 
 const SubjectsHeading: React.FC = () => {
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-    const inputRef = useRef<HTMLInputElement>(null);
     const {colors} = useAppSelector(state => state.subject);
 
-    const getRandomColor = (): Color => colors[Math.floor(Math.random() * colors.length)];
+    const getRandomColor = (): string => colors[Math.floor(Math.random() * colors.length)].fontColor;
+    const [fontColor] = useState<string>(getRandomColor());
 
-    const fontColor = getRandomColor().fontColor;
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const fontStyle: object = {
         color: fontColor
@@ -24,19 +23,18 @@ const SubjectsHeading: React.FC = () => {
         backgroundColor: fontColor
     };
 
-
     const searchInputStyle: object = {
         borderBottom: `2px solid ${fontColor}`
     };
 
-    function toggleSearchInput(): void {
+    const toggleSearchInput = (): void => {
         setIsSearchOpen(!isSearchOpen);
         if (inputRef.current && !isSearchOpen) {
             inputRef.current.focus();
         } else if (inputRef.current && isSearchOpen){
             inputRef.current.blur();
         }
-    }
+    };
 
     return (
         <>
