@@ -6,14 +6,14 @@ export interface SubjectState {
     colors: Color[],
     subjects: Subject[],
     isLoading: boolean,
-    isSearching: boolean,
+    searchingValue: string,
 }
 
 const initialState: SubjectState = {
     colors: [],
     subjects: [],
     isLoading: false,
-    isSearching: false
+    searchingValue: ""
 };
 
 const SubjectSlice = createSlice({
@@ -29,8 +29,8 @@ const SubjectSlice = createSlice({
         setIsLoading: (state: SubjectState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
         },
-        setIsSearching: (state: SubjectState, action: PayloadAction<boolean>) => {
-            state.isSearching = action.payload;
+        setSearchingValue: (state: SubjectState, action: PayloadAction<string>) => {
+            state.searchingValue = action.payload;
         }
     }
 });

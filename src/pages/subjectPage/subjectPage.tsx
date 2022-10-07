@@ -13,22 +13,16 @@ const SubjectPage: React.FC = () => {
 
     const subjectService: SubjectService = new SubjectService();
 
-    const onRequestSubjects = (): void => {
+    function onRequestSubjects(): void {
         subjectService.getSubjects()
             .then(setSubjects)
             .then(() => setIsLoading(true));
-    };
+    }
 
-    const onRequestColors = (): void => {
+    function onRequestColors(): void {
         subjectService.getColors()
             .then(setColors);
-    };
-
-    // const filterItemsOnSearching = (searchingInput: string): Subject[] => {
-    //     return subjects.filter(item => {
-    //         return item.name.indexOf(searchingInput) > -1;
-    //     });
-    // };
+    }
 
     useEffect(onRequestColors, []);
     useEffect(onRequestSubjects, []);
@@ -37,10 +31,10 @@ const SubjectPage: React.FC = () => {
         <>
             <section className="subjectPageSection">
                 {
-                    isLoading ? <SubjectsHeading /> : ""
+                    isLoading ? <SubjectsHeading/> : ""
                 }
                 {
-                    isLoading ? <SubjectItems /> : <LoadingAnimation />
+                    isLoading ? <SubjectItems/> : <LoadingAnimation/>
                 }
             </section>
         </>
