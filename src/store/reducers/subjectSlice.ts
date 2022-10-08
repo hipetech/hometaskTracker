@@ -7,13 +7,17 @@ export interface SubjectState {
     subjects: Subject[],
     isLoading: boolean,
     searchingValue: string,
+    randomColor: Color,
+    isModalOpen: boolean,
 }
 
 const initialState: SubjectState = {
     colors: [],
     subjects: [],
     isLoading: false,
-    searchingValue: ""
+    searchingValue: "",
+    randomColor: {backgroundColor: "", fontColor: ""},
+    isModalOpen: true
 };
 
 const SubjectSlice = createSlice({
@@ -31,6 +35,12 @@ const SubjectSlice = createSlice({
         },
         setSearchingValue: (state: SubjectState, action: PayloadAction<string>) => {
             state.searchingValue = action.payload;
+        },
+        setRandomColor: (state: SubjectState, action: PayloadAction<Color>) => {
+            state.randomColor = action.payload;
+        },
+        setIsModalOpen: (state: SubjectState, action: PayloadAction<boolean>) => {
+            state.isModalOpen = action.payload;
         }
     }
 });

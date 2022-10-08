@@ -5,12 +5,8 @@ import {useActions} from "../../hooks/useActions";
 
 const SubjectsHeading: React.FC = () => {
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-    const {colors, searchingValue} = useAppSelector(state => state.subject);
+    const {randomColor, searchingValue} = useAppSelector(state => state.subject);
     const {setSearchingValue} = useActions();
-
-    function getRandomColor(): string {
-        return colors[Math.floor(Math.random() * colors.length)].fontColor;
-    }
 
     function toggleSearchInput(): void {
         setIsSearchOpen(!isSearchOpen);
@@ -22,24 +18,22 @@ const SubjectsHeading: React.FC = () => {
         }
     }
 
-    const [fontColor] = useState<string>(getRandomColor());
-
     const inputRef = useRef<HTMLInputElement>(null);
 
     const fontStyle: object = {
-        color: fontColor
+        color: randomColor.fontColor
     };
 
     const searchCircleStyle: object = {
-        boxShadow: `0 0 0 3px ${fontColor}`
+        boxShadow: `0 0 0 3px ${randomColor.fontColor}`
     };
 
     const searchStyle: object = {
-        backgroundColor: fontColor
+        backgroundColor: randomColor.fontColor
     };
 
     const searchInputStyle: object = {
-        borderBottom: `2px solid ${fontColor}`
+        borderBottom: `2px solid ${randomColor.fontColor}`
     };
 
     return (

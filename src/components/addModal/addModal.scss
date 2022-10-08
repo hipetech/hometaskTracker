@@ -1,0 +1,62 @@
+@import "../../styles/variables";
+
+.addModalSection {
+  width: 450px;
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-48%, -50%);
+  border-radius: 26px;
+  box-shadow: $shadow;
+  padding: 15px;
+}
+
+.addModalForm {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+}
+
+.colorAttributes {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.modalInput {
+  border: 0;
+  background-color: transparent;
+  height: 30px;
+  font-size: 20px;
+}
+
+#teacherName {
+  margin-bottom: 8px;
+}
+
+.modalInput:focus {
+  outline: none;
+}
+
+.teacherCountLabel {
+  margin-right: 5px;
+}
+
+.modalRange {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+#teacherCount {
+  margin-left: 5px;
+  width: 260px;
+}
+
+
