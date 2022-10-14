@@ -4,6 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import SubjectPage from "./pages/subjectPage/subjectPage";
 
 const App: React.FC = () => {
+
     return (
         <div className="App">
             <Routes>
