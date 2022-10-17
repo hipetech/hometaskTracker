@@ -9,16 +9,17 @@ interface ColorCheckboxProps {
     color: Color,
     colorValue: Color,
     setColorValue: (color: Color) => void
+    colorState: boolean
 }
 
-const ColorCheckbox:React.FC<ColorCheckboxProps> = ({color, name, setColorValue, colorValue}) => {
+const ColorCheckbox:React.FC<ColorCheckboxProps> = ({color, name, setColorValue, colorValue, colorState}) => {
     const id: string = v4();
 
     const {randomColor} = useAppSelector(state => state.subject);
 
-    const backgroundColor: object = {
+    const backgroundColor = {
         backgroundColor: color.backgroundColor,
-        borderColor: color.fontColor
+        border: colorState ? `1px solid ${color.fontColor}`: "2px solid #771515"
     };
 
     const pointerColor: object = {
