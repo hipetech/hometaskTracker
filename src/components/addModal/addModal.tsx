@@ -113,6 +113,7 @@ const AddModal: React.FC = () => {
 
     function onFormSubmit(e: React.FormEvent): void {
         e.preventDefault();
+
         const isValidTextInputs = validateTextInputs();
         const isValidColorRadiobutton = validateColorRadiobutton();
 
