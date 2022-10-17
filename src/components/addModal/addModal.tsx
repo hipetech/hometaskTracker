@@ -7,6 +7,7 @@ import ColorCheckbox from "../colorCheckbox/colorCheckbox";
 import Color from "../../types/Color";
 import {Button, Slider} from "@mui/material";
 import {closeButtonStyle, submitButtonStyle} from "../../styles/materialUIStyles";
+import {isEmpty} from "../../services/validationService";
 
 const AddModal: React.FC = () => {
 
@@ -24,6 +25,9 @@ const AddModal: React.FC = () => {
     const [colorValue, setColorValue] = useState<Color>({backgroundColor: "", fontColor: "", id: ""});
 
 
+    const [isTextInputsValid, setIsTextInputsValid] = useState<boolean>(true);
+    const [isColorInputValid, setIsColorInputValid] = useState<boolean>(true);
+
     function onNameInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setSubjectName(e.target.value);
         setCurrentInputValue(e.target.value);
@@ -39,7 +43,8 @@ const AddModal: React.FC = () => {
     const TeacherInput: React.FC<{ i: number, value: string }> = ({i, value}) => {
         return (
             <>
-                <input type="text" id={"teacherName"} className={"modalInput"} style={borderInputColor}
+                <input type="text" id={"teacherName"} className={"modalInput"}
+                       style={isBorderError}
                        placeholder={"Teacher name"}
                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onTeacherInputChange(i, e)}
                        autoComplete={"off"}
@@ -63,7 +68,9 @@ const AddModal: React.FC = () => {
                                   color={color}
                                   key={v4()}
                                   colorValue={colorValue}
-                                  setColorValue={setColorValue}/>;
+                                  setColorValue={setColorValue}
+                                  colorState={isColorInputValid}
+            />;
         });
     }
 
@@ -71,6 +78,7 @@ const AddModal: React.FC = () => {
         if (value > teacherCount) {
             const arr = [...teachers, ...new Array<string>(value - teachers.length).fill("")];
             setTeachers(arr);
+
         } else {
             setTeachers(teachers.slice(0, value));
         }
@@ -82,9 +90,31 @@ const AddModal: React.FC = () => {
         setTeacherCount(value);
     }
 
+    function validateTextInputs(): boolean {
+        if (!isEmpty(subjectName)) return false;
+        else return teachers.every(isEmpty);
+    }
+
+    function validateColorRadiobutton(): boolean {
+        return isEmpty(colorValue.fontColor) || isEmpty(colorValue.backgroundColor);
+
+    }
+
+    function isValid(validator: () => boolean, setter: (bool: boolean) => void) {
+        if (validator()) setter(true);
+        else setter(false);
+    }
+
+    function validateInputs(): void {
+        isValid(validateTextInputs, setIsTextInputsValid);
+        isValid(validateColorRadiobutton, setIsColorInputValid);
+    }
+
+
     function onFormSubmit(e: React.FormEvent): void {
         e.preventDefault();
-        console.log("hello world");
+        validateInputs();
+        if (validateTextInputs() && validateColorRadiobutton()) console.log("hello world");
     }
 
     function onModalClose(): void {
@@ -100,6 +130,12 @@ const AddModal: React.FC = () => {
         borderBottom: `1px solid ${randomColor.fontColor}`
     };
 
+    const errorBorderColor = {
+        borderBottom: "2px solid #771515"
+    };
+
+    const isBorderError = isTextInputsValid ? borderInputColor : errorBorderColor;
+
     const marks = [
         {value: 1, label: "1"},
         {value: 2, label: "2"},
@@ -108,11 +144,21 @@ const AddModal: React.FC = () => {
         {value: 5, label: "5"}
     ];
 
+    const error = {
+        id: "Input Error",
+        fontColor: "#771515",
+        backgroundColor: "#de8d8d"
+    };
+
+    const condition = isTextInputsValid && isColorInputValid;
+    const isButtonBackgroundError = condition ? randomColor : error;
+
     return (
         <>
             <section className={`addModalSection ${isModalOpen ? "" : "disable"}`}>
                 <form className="addModalForm" onSubmit={onFormSubmit}>
-                    <input type="text" id={"subjectName"} className={"modalInput"} style={borderInputColor}
+                    <input type="text" id={"subjectName"} className={"modalInput"}
+                           style={isBorderError}
                            placeholder={"Subject name"} value={subjectName}
                            onChange={onNameInputChange}
                            autoComplete={"off"}
@@ -140,9 +186,12 @@ const AddModal: React.FC = () => {
                             renderColorAttributes()
                         }
                     </div>
-                    <Button sx={submitButtonStyle(randomColor)}
-                            size="large"
-                            type="submit">Add</Button>
+                    <Button sx={submitButtonStyle(isButtonBackgroundError)}
+                            size="large" type="submit">
+                        {
+                            condition ? "Add" : "Your input data is wrong, click to resubmit"
+                        }
+                    </Button>
                     <Button sx={closeButtonStyle(randomColor)}
                             size="large"
                             onClick={onModalClose}>

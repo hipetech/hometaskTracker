@@ -8,7 +8,7 @@ export interface SubjectState {
     isLoading: boolean,
     searchingValue: string,
     randomColor: Color,
-    isModalOpen: boolean,
+    isModalOpen: boolean
 }
 
 const initialState: SubjectState = {
