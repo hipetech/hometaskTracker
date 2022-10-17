@@ -2,7 +2,7 @@ import Task from "./Task";
 import Color from "./Color";
 
 type Subject = {
-    id: string,
+    _id: string,
     name: string,
     teachers: string[],
     tasks: Task[],

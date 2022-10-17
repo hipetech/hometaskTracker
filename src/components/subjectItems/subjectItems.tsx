@@ -16,7 +16,7 @@ const SubjectItems: React.FC = () => {
     function renderSubjectItems(): JSX.Element[] {
         const filteredSubjects = filterBySearchValue();
         return filteredSubjects.map((elem: Subject) => {
-            return (<SubjectItem subject={elem} key={elem.id}/>);
+            return (<SubjectItem subject={elem} key={elem._id}/>);
         });
     }
 

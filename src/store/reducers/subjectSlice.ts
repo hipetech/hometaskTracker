@@ -16,8 +16,8 @@ const initialState: SubjectState = {
     subjects: [],
     isLoading: false,
     searchingValue: "",
-    randomColor: {backgroundColor: "", fontColor: ""},
-    isModalOpen: true
+    randomColor: {backgroundColor: "", fontColor: "", id: ""},
+    isModalOpen: false
 };
 
 const SubjectSlice = createSlice({

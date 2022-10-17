@@ -15,6 +15,7 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
         color: subject.colors.fontColor
     };
 
+
     return (
         <>
             <section className="subjectItemSection" style={subjectItemBackgroundStyle}>

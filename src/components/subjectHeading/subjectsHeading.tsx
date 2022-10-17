@@ -6,7 +6,7 @@ import {useActions} from "../../hooks/useActions";
 const SubjectsHeading: React.FC = () => {
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
     const {randomColor, searchingValue} = useAppSelector(state => state.subject);
-    const {setSearchingValue} = useActions();
+    const {setSearchingValue, setIsModalOpen} = useActions();
 
     function toggleSearchInput(): void {
         setIsSearchOpen(!isSearchOpen);
@@ -18,23 +18,28 @@ const SubjectsHeading: React.FC = () => {
         }
     }
 
+    function onModalOpen(): void {
+        setIsModalOpen(true);
+    }
+
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const fontStyle: object = {
+    const fontStyle = {
         color: randomColor.fontColor
     };
 
-    const searchCircleStyle: object = {
+    const searchCircleStyle = {
         boxShadow: `0 0 0 3px ${randomColor.fontColor}`
     };
 
-    const searchStyle: object = {
+    const searchStyle = {
         backgroundColor: randomColor.fontColor
     };
 
-    const searchInputStyle: object = {
+    const searchInputStyle = {
         borderBottom: `2px solid ${randomColor.fontColor}`
     };
+
 
     return (
         <>
@@ -43,7 +48,7 @@ const SubjectsHeading: React.FC = () => {
                     Subjects
                 </h1>
                 <div className="subjectsHeadingButton">
-                    <button className={"addButton"}>
+                    <button className={"addButton"} onClick={onModalOpen}>
                         Add
                     </button>
                     <button className={"removeButton"}>

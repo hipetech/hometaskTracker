@@ -1,4 +1,5 @@
 type Color = {
+    id: string,
     fontColor: string,
     backgroundColor: string
 }

@@ -1,23 +1,98 @@
-import React, {FormEvent, ReactNode, useState} from "react";
+import React, {ReactNode, useState} from "react";
 import "./addModal.scss";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useActions} from "../../hooks/useActions";
 import {v4} from "uuid";
 import ColorCheckbox from "../colorCheckbox/colorCheckbox";
 import Color from "../../types/Color";
+import {Button, Slider} from "@mui/material";
+import {closeButtonStyle, submitButtonStyle} from "../../styles/materialUIStyles";
 
 const AddModal: React.FC = () => {
-    const [teacherCount, setTeacherCount] = useState<string>("1");
-    const {randomColor, subjects, isModalOpen, colors} = useAppSelector(state => state.subject);
-    const {setSubjects} = useActions();
 
-    const [colorValue, setColorValue] = useState<Color>({backgroundColor: "", fontColor: ""});
+    const {randomColor, isModalOpen, colors} = useAppSelector(state => state.subject);
+    const {setIsModalOpen} = useActions();
 
-    const modalBackground = {
-        backgroundColor: randomColor.backgroundColor
+    const [currentInputValue, setCurrentInputValue] = useState<string>();
+
+    // form values
+    const [subjectName, setSubjectName] = useState<string>("");
+
+    const [teachers, setTeachers] = useState<string[]>([""]);
+    const [teacherCount, setTeacherCount] = useState<number>(1);
+
+    const [colorValue, setColorValue] = useState<Color>({backgroundColor: "", fontColor: "", id: ""});
+
+
+    function onNameInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        setSubjectName(e.target.value);
+        setCurrentInputValue(e.target.value);
+    }
+
+    function onTeacherInputChange(i: number, e: any): void {
+        const tmp = [...teachers];
+        tmp[i] = e.target.value;
+        setCurrentInputValue(e.target.value);
+        setTeachers(tmp);
+    }
+
+    const TeacherInput: React.FC<{ i: number, value: string }> = ({i, value}) => {
+        return (
+            <>
+                <input type="text" id={"teacherName"} className={"modalInput"} style={borderInputColor}
+                       placeholder={"Teacher name"}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => onTeacherInputChange(i, e)}
+                       autoComplete={"off"}
+                       value={value}
+                       autoFocus={currentInputValue === value}
+                />
+            </>
+        );
     };
 
-    const labelColor = {
+    function renderTeacherNameInput(): ReactNode[] {
+        return teachers.map((teacher, index) => {
+            return <TeacherInput key={v4()} i={index} value={teacher}/>;
+        });
+    }
+
+
+    function renderColorAttributes(): ReactNode[] {
+        return colors.map(color => {
+            return <ColorCheckbox name={"color"}
+                                  color={color}
+                                  key={v4()}
+                                  colorValue={colorValue}
+                                  setColorValue={setColorValue}/>;
+        });
+    }
+
+    function setTeachersOnRange(value: number): void {
+        if (value > teacherCount) {
+            const arr = [...teachers, ...new Array<string>(value - teachers.length).fill("")];
+            setTeachers(arr);
+        } else {
+            setTeachers(teachers.slice(0, value));
+        }
+    }
+
+    function onRangeChange(e: any): void {
+        const value = Number(e.target.value);
+        setTeachersOnRange(value);
+        setTeacherCount(value);
+    }
+
+    function onFormSubmit(e: React.FormEvent): void {
+        e.preventDefault();
+        console.log("hello world");
+    }
+
+    function onModalClose(): void {
+        setIsModalOpen(false);
+    }
+
+    // styles
+    const fontColor = {
         color: randomColor.fontColor
     };
 
@@ -25,62 +100,37 @@ const AddModal: React.FC = () => {
         borderBottom: `1px solid ${randomColor.fontColor}`
     };
 
-    const TeacherInput: React.FC = () => {
-        return (
-            <>
-                <input type="text" id={"teacherName"} className={"modalInput"} style={borderInputColor}
-                       placeholder={"Teacher name"}/>
-            </>
-        );
-    };
-
-    function renderTeacherNameInput(): ReactNode[] {
-        let inputs: ReactNode[] = [];
-
-        for (let i = 0; i < Number(teacherCount); i++) {
-            inputs = [...inputs, <TeacherInput key={v4()}/>];
-        }
-        return inputs;
-    }
-
-    function renderColorAttributes(): ReactNode[] {
-        let colorAttributes: ReactNode[] = [];
-
-        for (let i = 0; i < colors.length; i++) {
-            const color: Color = colors[i];
-            colorAttributes = [...colorAttributes, <ColorCheckbox name={"color"}
-                                                                  color={color}
-                                                                  key={v4()}
-                                                                  colorValue={colorValue}
-                                                                  setColorValue={setColorValue}/>];
-        }
-
-        return colorAttributes;
-    }
-
-    function onSubmit(e: React.FormEvent): void {
-        e.preventDefault();
-        console.log("hello world");
-    }
-
-    function onRangeChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        setTeacherCount(e.target.value);
-    }
+    const marks = [
+        {value: 1, label: "1"},
+        {value: 2, label: "2"},
+        {value: 3, label: "3"},
+        {value: 4, label: "4"},
+        {value: 5, label: "5"}
+    ];
 
     return (
         <>
-            <section className={`addModalSection ${isModalOpen ? "" : "disable"}`} style={modalBackground}>
-                <form className="addModalForm" onSubmit={onSubmit}>
+            <section className={`addModalSection ${isModalOpen ? "" : "disable"}`}>
+                <form className="addModalForm" onSubmit={onFormSubmit}>
                     <input type="text" id={"subjectName"} className={"modalInput"} style={borderInputColor}
-                           placeholder={"Subject name"}/>
-                    <span style={labelColor} className={"modalRange"}>
-                        <label htmlFor={"teacherCount"} style={labelColor} className={"teacherCountLabel"}>
+                           placeholder={"Subject name"} value={subjectName}
+                           onChange={onNameInputChange}
+                           autoComplete={"off"}
+                    />
+                    <span className={"modalRange"}>
+                        <label htmlFor={"teacherCount"} style={fontColor} className={"teacherCountLabel"}>
                             Count of teachers:
                         </label>
-                        {teacherCount}
-                        <input type="range" id={"teacherCount"} min={"1"} max={"5"}
-                               value={teacherCount}
-                               onChange={onRangeChange}/>
+                        <Slider
+                            id={"teacherCount"}
+                            step={1}
+                            marks={marks}
+                            min={1}
+                            max={5}
+                            value={teacherCount}
+                            onChange={onRangeChange}
+                            sx={{color: randomColor.fontColor}}
+                        />
                     </span>
                     {
                         renderTeacherNameInput()
@@ -90,10 +140,17 @@ const AddModal: React.FC = () => {
                             renderColorAttributes()
                         }
                     </div>
-                    <input type="submit" value={"Add"}/>
+                    <Button sx={submitButtonStyle(randomColor)}
+                            size="large"
+                            type="submit">Add</Button>
+                    <Button sx={closeButtonStyle(randomColor)}
+                            size="large"
+                            onClick={onModalClose}>
+                        Close
+                    </Button>
                 </form>
             </section>
-            <div className="addModalBackground"></div>
+            <div className={`addModalBackground ${isModalOpen ? "" : "disable"}`} onClick={onModalClose}></div>
         </>
     );
 };

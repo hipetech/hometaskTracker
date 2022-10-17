@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import SubjectsHeading from "../../components/subjectHeading/subjectsHeading";
 import SubjectItems from "../../components/subjectItems/subjectItems";
 import LoadingAnimation from "../../components/loadingAnimation/loadingAnimation";
@@ -13,12 +13,18 @@ const SubjectPage: React.FC = () => {
 
     const {setColors, setSubjects, setIsLoading, setRandomColor} = useActions();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [subjectError, setSubjectError] = useState<boolean>(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [colorError, setColorError] = useState<boolean>(false);
+
     const subjectService: SubjectService = new SubjectService();
 
     function onRequestSubjects(): void {
-        subjectService.getSubjects()
+        subjectService.getSubjects().then()
             .then(setSubjects)
-            .then(() => setIsLoading(true));
+            .then(() => setIsLoading(true))
+            .catch(() => setSubjectError(true));
     }
 
     function getRandomColor(): Color {
@@ -27,7 +33,8 @@ const SubjectPage: React.FC = () => {
 
     function onRequestColors(): void {
         subjectService.getColors()
-            .then(setColors);
+            .then(setColors)
+            .catch(() => setColorError(true));
     }
 
     function onLoadRandomColor(): void {
@@ -35,8 +42,8 @@ const SubjectPage: React.FC = () => {
     }
 
     useEffect(onRequestColors, []);
-    useEffect(onRequestSubjects, []);
     useEffect(onLoadRandomColor, [colors]);
+    useEffect(onRequestSubjects, []);
 
     return (
         <>
