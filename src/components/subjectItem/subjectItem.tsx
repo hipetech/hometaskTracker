@@ -1,6 +1,7 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import Subject from "../../types/Subject";
 import "./subjectItem.scss";
+import {v4} from "uuid";
 
 interface SubjectItemProps {
     subject: Subject
@@ -15,6 +16,10 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
         color: subject.colors.fontColor
     };
 
+    function renderTeachers(): ReactNode {
+        return subject.teachers.map(teacher => <h4 key={v4()}>{teacher}</h4>);
+    }
+
 
     return (
         <>
@@ -25,11 +30,11 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
                             subject.name
                         }
                     </h3>
-                    <h4 style={subjectItemFontStyle}>
+                    <section style={subjectItemFontStyle} className={"teacherNames"}>
                         {
-                            subject.teachers
+                            renderTeachers()
                         }
-                    </h4>
+                    </section>
                 </div>
                 <div className="subjectCounter">
                     <h2 style={subjectItemFontStyle}>

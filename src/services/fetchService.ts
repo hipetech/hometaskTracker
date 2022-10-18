@@ -3,7 +3,14 @@ import Color from "../types/Color";
 import config from "./config.json";
 import Task from "../types/Task";
 
-export default class SubjectService {
+interface postSubject {
+    name: string,
+    teachers: string[],
+    tasks: Task[],
+    colors: string
+}
+
+export default class FetchService {
     url: string;
 
     constructor() {
@@ -39,21 +46,13 @@ export default class SubjectService {
         });
 
         if (!res.ok) {
-            console.log(res.json());
             throw new Error(`Could not post ${url}, status: ${res.status}`);
         }
 
         return res.json();
     }
 
-    public async postSubject(body: {
-        name: string,
-        teachers: string[],
-        tasks: Task[],
-        colors: string
-    }): Promise<Subject> {
+    public async postSubject(body: postSubject): Promise<Subject> {
         return await this.postResource(`${this.url}/subject`, body);
     }
-
-
 }

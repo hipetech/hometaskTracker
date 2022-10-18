@@ -4,7 +4,7 @@ import SubjectItems from "../../components/subjectItems/subjectItems";
 import LoadingAnimation from "../../components/loadingAnimation/loadingAnimation";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useActions} from "../../hooks/useActions";
-import SubjectService from "../../services/subjectService";
+import FetchService from "../../services/fetchService";
 import AddModal from "../../components/addModal/addModal";
 import Color from "../../types/Color";
 
@@ -18,7 +18,7 @@ const SubjectPage: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [colorError, setColorError] = useState<boolean>(false);
 
-    const subjectService: SubjectService = new SubjectService();
+    const subjectService: FetchService = new FetchService();
 
     function onRequestSubjects(): void {
         subjectService.getSubjects().then()

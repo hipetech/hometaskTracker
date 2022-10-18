@@ -8,7 +8,7 @@ import Color from "../../types/Color";
 import {Button, Slider} from "@mui/material";
 import {closeButtonStyle, submitButtonStyle} from "../../styles/materialUIStyles";
 import {isEmpty} from "../../services/validationService";
-import SubjectService from "../../services/subjectService";
+import FetchService from "../../services/fetchService";
 
 const AddModal: React.FC = () => {
 
@@ -29,7 +29,7 @@ const AddModal: React.FC = () => {
     const [isTextInputsValid, setIsTextInputsValid] = useState<boolean>(true);
     const [isColorInputValid, setIsColorInputValid] = useState<boolean>(true);
 
-    const subjectService = new SubjectService();
+    const subjectService = new FetchService();
 
     function onNameInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setSubjectName(e.target.value);
