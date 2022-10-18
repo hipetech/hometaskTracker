@@ -15,7 +15,7 @@ const AddModal: React.FC = () => {
     const {randomColor, isModalOpen, colors} = useAppSelector(state => state.subject);
     const {setIsModalOpen, setSubjects} = useActions();
 
-    const [currentInputValue, setCurrentInputValue] = useState<string>();
+    const [currentInputId, setCurrentInputId] = useState<number>();
 
     // form values
     const [subjectName, setSubjectName] = useState<string>("");
@@ -31,19 +31,20 @@ const AddModal: React.FC = () => {
 
     const subjectService = new FetchService();
 
+    const inputNameId = Math.random();
     function onNameInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setSubjectName(e.target.value);
-        setCurrentInputValue(e.target.value);
+        setCurrentInputId(inputNameId);
     }
 
     function onTeacherInputChange(i: number, e: any): void {
         const tmp = [...teachers];
         tmp[i] = e.target.value;
-        setCurrentInputValue(e.target.value);
+        setCurrentInputId(i);
         setTeachers(tmp);
     }
 
-    const TeacherInput: React.FC<{ i: number, value: string }> = ({i, value}) => {
+    const TeacherInput: React.FC<{ i: number, value: string}> = ({i, value}) => {
         return (
             <>
                 <input type="text" id={"teacherName"} className={"modalInput"}
@@ -52,7 +53,7 @@ const AddModal: React.FC = () => {
                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onTeacherInputChange(i, e)}
                        autoComplete={"off"}
                        value={value}
-                       autoFocus={currentInputValue === value}
+                       autoFocus={currentInputId === i}
                 />
             </>
         );
@@ -193,6 +194,7 @@ const AddModal: React.FC = () => {
                            placeholder={"Subject name"} value={subjectName}
                            onChange={onNameInputChange}
                            autoComplete={"off"}
+                           autoFocus={inputNameId === currentInputId}
                     />
                     <span className={"modalRange"}>
                         <label htmlFor={"teacherCount"} style={fontColor} className={"teacherCountLabel"}>
