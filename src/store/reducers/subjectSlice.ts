@@ -16,7 +16,7 @@ const initialState: SubjectState = {
     subjects: [],
     isLoading: false,
     searchingValue: "",
-    randomColor: {backgroundColor: "", fontColor: "", id: ""},
+    randomColor: {backgroundColor: "", fontColor: "", _id: ""},
     isModalOpen: false
 };
 

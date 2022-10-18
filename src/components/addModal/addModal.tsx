@@ -8,11 +8,12 @@ import Color from "../../types/Color";
 import {Button, Slider} from "@mui/material";
 import {closeButtonStyle, submitButtonStyle} from "../../styles/materialUIStyles";
 import {isEmpty} from "../../services/validationService";
+import SubjectService from "../../services/subjectService";
 
 const AddModal: React.FC = () => {
 
     const {randomColor, isModalOpen, colors} = useAppSelector(state => state.subject);
-    const {setIsModalOpen} = useActions();
+    const {setIsModalOpen, setSubjects} = useActions();
 
     const [currentInputValue, setCurrentInputValue] = useState<string>();
 
@@ -22,11 +23,13 @@ const AddModal: React.FC = () => {
     const [teachers, setTeachers] = useState<string[]>([""]);
     const [teacherCount, setTeacherCount] = useState<number>(1);
 
-    const [colorValue, setColorValue] = useState<Color>({backgroundColor: "", fontColor: "", id: ""});
+    const [colorValue, setColorValue] = useState<Color>({backgroundColor: "", fontColor: "", _id: ""});
 
 
     const [isTextInputsValid, setIsTextInputsValid] = useState<boolean>(true);
     const [isColorInputValid, setIsColorInputValid] = useState<boolean>(true);
+
+    const subjectService = new SubjectService();
 
     function onNameInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setSubjectName(e.target.value);
@@ -110,6 +113,29 @@ const AddModal: React.FC = () => {
         isValid(validateColorRadiobutton, setIsColorInputValid);
     }
 
+    function clearInputs(): void {
+        setSubjectName("");
+        setTeachers(teachers.fill(""));
+        setColorValue({_id: "", fontColor: "", backgroundColor: ""});
+    }
+
+    function postFromData(): void {
+        const body = {
+            name: subjectName,
+            teachers: teachers,
+            tasks: [],
+            colors: colorValue._id
+        };
+
+        subjectService.postSubject(body)
+            .then(clearInputs)
+            .then(() => setIsModalOpen(false))
+            .then(() => {
+                subjectService.getSubjects()
+                    .then(setSubjects);
+            });
+    }
+
 
     function onFormSubmit(e: React.FormEvent): void {
         e.preventDefault();
@@ -119,7 +145,7 @@ const AddModal: React.FC = () => {
 
         validateInputs(isValidTextInputs, isValidColorRadiobutton);
 
-        if (isValidTextInputs && isValidColorRadiobutton) console.log("hello world");
+        if (isValidTextInputs && isValidColorRadiobutton) postFromData();
     }
 
     function onModalClose(): void {
@@ -150,7 +176,7 @@ const AddModal: React.FC = () => {
     ];
 
     const error = {
-        id: "Input Error",
+        _id: "Input Error",
         fontColor: "#771515",
         backgroundColor: "#de8d8d"
     };
