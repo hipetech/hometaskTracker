@@ -2,18 +2,27 @@ import React, {ReactNode} from "react";
 import Subject from "../../types/Subject";
 import "./subjectItem.scss";
 import {v4} from "uuid";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface SubjectItemProps {
     subject: Subject
 }
 
 const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
-    const subjectItemBackgroundStyle: object = {
+
+    const {isRemoveModeOpen} = useAppSelector(state => state.subject);
+
+    const subjectItemBackgroundStyle = {
         backgroundColor: subject.colors.backgroundColor
     };
 
-    const subjectItemFontStyle: object = {
+    const subjectItemFontStyle = {
         color: subject.colors.fontColor
+    };
+
+    const closeButtonStyle = {
+        backgroundColor: subject.colors.fontColor,
+        color: subject.colors.backgroundColor
     };
 
     function renderTeachers(): ReactNode {
@@ -23,7 +32,7 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
 
     return (
         <>
-            <section className="subjectItemSection" style={subjectItemBackgroundStyle}>
+            <section className={`subjectItemSection ${isRemoveModeOpen ? "onRemove": ""}`} style={subjectItemBackgroundStyle}>
                 <div className="subjectInfo">
                     <h3 style={subjectItemFontStyle}>
                         {
@@ -43,6 +52,10 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
                         }
                     </h2>
                 </div>
+                <button className={`removeItemButton ${isRemoveModeOpen ? "": "disable"}`}
+                        style={closeButtonStyle}>
+                   <span>+</span>
+                </button>
             </section>
         </>
     );

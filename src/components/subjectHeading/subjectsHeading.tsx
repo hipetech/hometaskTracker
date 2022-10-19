@@ -5,8 +5,8 @@ import {useActions} from "../../hooks/useActions";
 
 const SubjectsHeading: React.FC = () => {
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-    const {randomColor, searchingValue} = useAppSelector(state => state.subject);
-    const {setSearchingValue, setIsModalOpen} = useActions();
+    const {randomColor, searchingValue, isRemoveModeOpen} = useAppSelector(state => state.subject);
+    const {setSearchingValue, setIsModalOpen, setIsRemoveModeOpen} = useActions();
 
     function toggleSearchInput(): void {
         setIsSearchOpen(!isSearchOpen);
@@ -40,6 +40,10 @@ const SubjectsHeading: React.FC = () => {
         borderBottom: `2px solid ${randomColor.fontColor}`
     };
 
+    const selected = {
+        backgroundColor: "#c7c7c7"
+    };
+
 
     return (
         <>
@@ -51,7 +55,9 @@ const SubjectsHeading: React.FC = () => {
                     <button className={"addButton"} onClick={onModalOpen}>
                         Add
                     </button>
-                    <button className={"removeButton"}>
+                    <button className={"removeButton"}
+                            style={isRemoveModeOpen ? selected : {}}
+                            onClick={() => setIsRemoveModeOpen(!isRemoveModeOpen)}>
                         Remove
                     </button>
                     <input type="text" placeholder={"Search.."}
