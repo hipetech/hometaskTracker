@@ -5,11 +5,12 @@ import {useActions} from "../../hooks/useActions";
 
 const SubjectsHeading: React.FC = () => {
     const {randomColor, isDeleteMode} = useAppSelector(state => state.subject);
-    const { setIsModalOpen, setIsRemoveModeOpen} = useActions();
+    const {setIsModalOpen, setIsDeleteMode} = useActions();
 
 
     function onModalOpen(): void {
         setIsModalOpen(true);
+        setIsDeleteMode(false);
     }
 
     const fontStyle = {
@@ -41,7 +42,7 @@ const SubjectsHeading: React.FC = () => {
                     </button>
                     <button className={"removeButton"}
                             style={isDeleteMode ? selected : {}}
-                            onClick={() => setIsRemoveModeOpen(!isDeleteMode)}>
+                            onClick={() => setIsDeleteMode(!isDeleteMode)}>
                         Delete
                     </button>
                     <button className={"searchButton"}>

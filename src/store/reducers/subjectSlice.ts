@@ -44,7 +44,7 @@ const SubjectSlice = createSlice({
         setIsModalOpen: (state: SubjectState, action: PayloadAction<boolean>) => {
             state.isModalOpen = action.payload;
         },
-        setIsRemoveModeOpen: (state: SubjectState, action: PayloadAction<boolean>) => {
+        setIsDeleteMode: (state: SubjectState, action: PayloadAction<boolean>) => {
             state.isDeleteMode = action.payload;
         }
     }
