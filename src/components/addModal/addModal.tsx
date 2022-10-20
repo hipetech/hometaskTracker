@@ -6,7 +6,7 @@ import {v4} from "uuid";
 import ColorCheckbox from "../colorCheckbox/colorCheckbox";
 import Color from "../../types/Color";
 import {Button, Slider} from "@mui/material";
-import {closeButtonStyle, submitButtonStyle} from "../../styles/materialUIStyles";
+import {cancelButtonStyle, submitButtonStyle} from "../../styles/materialUIStyles";
 import {isEmpty} from "../../services/validationService";
 import FetchService from "../../services/fetchService";
 
@@ -225,7 +225,7 @@ const AddModal: React.FC = () => {
                             condition ? "Add" : "Your input data is wrong, click to resubmit"
                         }
                     </Button>
-                    <Button sx={closeButtonStyle(randomColor)}
+                    <Button sx={cancelButtonStyle(randomColor)}
                             size="large"
                             onClick={onModalClose}>
                         Close

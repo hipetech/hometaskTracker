@@ -54,11 +54,21 @@
 }
 
 @keyframes removeMode {
-  0% {transform: rotate(1deg)}
-  25% {transform: rotate(0)}
-  50% {transform: rotate(-1deg)}
-  75% {transform: rotate(0)}
-  100% {transform: rotate(1deg)}
+  0% {
+    transform: rotate(1deg)
+  }
+  25% {
+    transform: rotate(0)
+  }
+  50% {
+    transform: rotate(-1deg)
+  }
+  75% {
+    transform: rotate(0)
+  }
+  100% {
+    transform: rotate(1deg)
+  }
 }
 
 .onRemove {
@@ -73,6 +83,7 @@
   border: none;
   right: -10px;
   top: -10px;
+  z-index: 2;
 
   span {
     font-size: 40px;
@@ -83,5 +94,51 @@
     justify-content: center;
     align-items: center;
   }
+}
+
+.removeModal {
+  position: absolute;
+  background-color: $accentColor;
+  box-shadow: $shadow;
+  width: 320px;
+  height: 120px;
+  top: 50%;
+  left: 50%;
+  border-radius: inherit;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 2;
+
+  h4 {
+    font-size: 16px;
+    margin-top: 15px;
+    margin-inside: 15px;
+  }
+}
+
+.removeModalBtnGroup {
+  margin-top: 25px;
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    padding: 10px 30px;
+  }
+}
+
+.removeModalBlur {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  border-radius: inherit;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(1.5px);
 }
 

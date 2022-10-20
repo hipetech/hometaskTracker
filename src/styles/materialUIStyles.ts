@@ -1,26 +1,26 @@
 import Color from "../types/Color";
 
-export const submitButtonStyle = (randomColor: Color) => {
+export const submitButtonStyle = (color: Color) => {
     return {
-        color: randomColor.backgroundColor,
-        backgroundColor: randomColor.fontColor,
+        color: color.backgroundColor,
+        backgroundColor: color.fontColor,
         borderRadius: "26px",
-        border: `1px solid ${randomColor.fontColor}`,
+        border: `1px solid ${color.fontColor}`,
         ":hover": {
-            backgroundColor: randomColor.fontColor,
+            backgroundColor: color.fontColor,
         },
         marginBottom: "10px"
     };
 };
 
-export const closeButtonStyle = (randomColor: Color) => {
+export const cancelButtonStyle = (color: Color) => {
     return {
-        color: randomColor.fontColor,
-        backgroundColor: randomColor.backgroundColor,
+        color: color.fontColor,
+        backgroundColor: color.backgroundColor,
         borderRadius: "26px",
-        border: `1px solid ${randomColor.fontColor}`,
+        border: `1px solid ${color.fontColor}`,
         ":hover": {
-            backgroundColor: randomColor.backgroundColor
+            backgroundColor: color.backgroundColor
         },
         marginBottom: "10px"
     };

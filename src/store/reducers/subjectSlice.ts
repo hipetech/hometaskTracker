@@ -9,7 +9,7 @@ export interface SubjectState {
     searchingValue: string,
     randomColor: Color,
     isModalOpen: boolean,
-    isRemoveModeOpen: boolean
+    isDeleteMode: boolean
 }
 
 const initialState: SubjectState = {
@@ -19,7 +19,7 @@ const initialState: SubjectState = {
     searchingValue: "",
     randomColor: {backgroundColor: "", fontColor: "", _id: ""},
     isModalOpen: false,
-    isRemoveModeOpen: false
+    isDeleteMode: false
 };
 
 const SubjectSlice = createSlice({
@@ -45,7 +45,7 @@ const SubjectSlice = createSlice({
             state.isModalOpen = action.payload;
         },
         setIsRemoveModeOpen: (state: SubjectState, action: PayloadAction<boolean>) => {
-            state.isRemoveModeOpen = action.payload;
+            state.isDeleteMode = action.payload;
         }
     }
 });

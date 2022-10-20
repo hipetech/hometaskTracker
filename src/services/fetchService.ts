@@ -55,4 +55,21 @@ export default class FetchService {
     public async postSubject(body: postSubject): Promise<Subject> {
         return await this.postResource(`${this.url}/subject`, body);
     }
+
+    private async deleteResource(url: string): Promise<any>  {
+        const res = await fetch(url, {
+            method: "DELETE",
+            mode: "cors"
+        });
+
+        if (!res.ok) {
+            throw new Error(`Could not delete ${url}, status: ${res.status}`);
+        }
+
+        return res.json();
+    }
+
+    public async deleteSubject(id: string):  Promise<Subject> {
+        return await this.deleteResource(`${this.url}/subject/${id}`);
+    }
 }
