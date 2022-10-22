@@ -35,6 +35,10 @@ export default class FetchService {
         return await this.getResource(`${this.url}/color`);
     }
 
+    public async getSubjectById(id: string | undefined): Promise<Subject> {
+        return await this.getResource(`${this.url}/subject/${id}`);
+    }
+
     private async postResource(url: string, body: any): Promise<any> {
         const res = await fetch(url, {
             method: "POST",

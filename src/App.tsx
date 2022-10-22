@@ -11,7 +11,7 @@ const App: React.FC = () => {
             <Routes>
                 <Route path={"/"}
                        element={<SubjectPage/>}/>
-                <Route path={"/:_id"}
+                <Route path={":_id"}
                        element={<TaskPage/>}/>
             </Routes>
         </div>
