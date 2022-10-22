@@ -2,6 +2,7 @@ import React from "react";
 import "./App.scss";
 import {Route, Routes} from "react-router-dom";
 import SubjectPage from "./pages/subjectPage/subjectPage";
+import TaskPage from "./pages/taskPage/taskPage";
 
 const App: React.FC = () => {
 
@@ -9,8 +10,9 @@ const App: React.FC = () => {
         <div className="App">
             <Routes>
                 <Route path={"/"}
-                       element={<SubjectPage />
-                       }/>
+                       element={<SubjectPage/>}/>
+                <Route path={"/:_id"}
+                       element={<TaskPage/>}/>
             </Routes>
         </div>
     );

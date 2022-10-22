@@ -1,27 +1,34 @@
 @import "../../styles/variables";
 
 .subjectItemSection {
-  width: 385px;
-  height: 130px;
+  width: 410px;
+  height: 154px;
   border-radius: 26px;
-  padding: 25px 24px;
   position: relative;
-
-  h3 {
-    font-weight: 700;
-    font-size: 30px;
-    margin: 0 0 11px;
-  }
-
-  h4 {
-    margin: 0;
-    font-weight: 500;
-    font-size: 15px;
-  }
-
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+
+  a {
+    position: relative;
+    padding: 25px 24px;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    h3 {
+      font-weight: 700;
+      font-size: 30px;
+      margin: 0 0 11px;
+    }
+
+    h4 {
+      margin: 0;
+      font-weight: 500;
+      font-size: 15px;
+    }
+  }
   transition-duration: 0.4s;
 }
 

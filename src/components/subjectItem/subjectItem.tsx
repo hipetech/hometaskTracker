@@ -8,6 +8,7 @@ import {Button} from "@mui/material";
 import {submitButtonStyle, cancelButtonStyle} from "../../styles/materialUIStyles";
 import {useOutsideClick} from "../../hooks/useOutsideClick";
 import {useActions} from "../../hooks/useActions";
+import {Link} from "react-router-dom";
 
 interface SubjectItemProps {
     subject: Subject
@@ -72,25 +73,27 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
         <>
             <section className={`subjectItemSection ${isDeleteMode ? "onRemove" : ""}`}
                      style={subjectItemBackgroundStyle}>
-                <div className="subjectInfo">
-                    <h3 style={subjectItemFontStyle}>
-                        {
-                            subject.name
-                        }
-                    </h3>
-                    <section style={subjectItemFontStyle} className={"teacherNames"}>
-                        {
-                            renderTeachers()
-                        }
-                    </section>
-                </div>
-                <div className="subjectCounter">
-                    <h2 style={subjectItemFontStyle}>
-                        {
-                            subject.tasks.length
-                        }
-                    </h2>
-                </div>
+                <Link to={`/${subject._id}`}>
+                    <div className="subjectInfo">
+                        <h3 style={subjectItemFontStyle}>
+                            {
+                                subject.name
+                            }
+                        </h3>
+                        <section style={subjectItemFontStyle} className={"teacherNames"}>
+                            {
+                                renderTeachers()
+                            }
+                        </section>
+                    </div>
+                    <div className="subjectCounter">
+                        <h2 style={subjectItemFontStyle}>
+                            {
+                                subject.tasks.length
+                            }
+                        </h2>
+                    </div>
+                </Link>
                 <button className={`removeItemButton ${isDeleteMode ? "" : "disable"}`}
                         style={closeButtonStyle}
                         onClick={openDeleteModal}>
