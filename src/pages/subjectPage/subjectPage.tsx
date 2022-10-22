@@ -7,9 +7,10 @@ import {useActions} from "../../hooks/useActions";
 import FetchService from "../../services/fetchService";
 import AddModal from "../../components/addModal/addModal";
 import Color from "../../types/Color";
+import ControlHeading from "../../components/controlHeading/controlHeading";
 
 const SubjectPage: React.FC = () => {
-    const {isLoading, colors} = useAppSelector(state => state.subject);
+    const {isLoading, colors, randomColor} = useAppSelector(state => state.subject);
 
     const {setColors, setSubjects, setIsLoading, setRandomColor} = useActions();
 
@@ -27,26 +28,27 @@ const SubjectPage: React.FC = () => {
             .catch(() => setSubjectError(true));
     }
 
-    function getRandomColor(): Color {
+    function getRandomColor(colors: Color[]): Color {
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
     function onRequestColors(): void {
-        subjectService.getColors()
-            .then(setColors)
-            .catch(() => setColorError(true));
-    }
-
-    function onLoadRandomColor(): void {
-        if (colors.length) setRandomColor(getRandomColor());
+        if (!colors.length) {
+            subjectService.getColors()
+                .then((res) => {
+                    setColors(res);
+                    setRandomColor(getRandomColor(res));
+                })
+                .catch(() => setColorError(true));
+        }
     }
 
     useEffect(onRequestColors, []);
-    useEffect(onLoadRandomColor, [colors]);
     useEffect(onRequestSubjects, []);
 
     return (
         <>
+            <ControlHeading backButton={false} />
             <section className="subjectPageSection">
                 {
                     isLoading ? <SubjectsHeading/> : ""

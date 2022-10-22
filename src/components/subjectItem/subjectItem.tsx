@@ -73,7 +73,7 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
         <>
             <section className={`subjectItemSection ${isDeleteMode ? "onRemove" : ""}`}
                      style={subjectItemBackgroundStyle}>
-                <Link to={`/${subject._id}`}>
+                <Link to={`/${subject.name.split(" ").join("")}/${subject._id}`}>
                     <div className="subjectInfo">
                         <h3 style={subjectItemFontStyle}>
                             {

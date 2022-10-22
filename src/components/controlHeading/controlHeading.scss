@@ -1,0 +1,31 @@
+@import "./../../styles/variables";
+
+.controlHeading {
+  width: 100%;
+  margin: 0 0 12px;
+  position: relative;
+  height: 35px;
+}
+
+.headingButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  min-width: 50px;
+  font-weight: 500;
+  font-size: 18px;
+  background-color: $accentColor;
+  border: 0;
+  border-radius: 12px;
+  font-family: 'Roboto', sans-serif;
+  position: absolute;
+}
+
+.back {
+  left: 0;
+}
+
+.lang {
+  right: 0;
+}
