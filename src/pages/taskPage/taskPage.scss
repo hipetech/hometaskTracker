@@ -32,3 +32,10 @@
   font-weight: 500;
   margin: 0;
 }
+
+.taskColumns {
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 13px;
+}

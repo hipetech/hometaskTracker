@@ -1,0 +1,21 @@
+.taskColumnSection {
+  width: 436px;
+}
+
+.taskColumnHeading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px 12px 0 0;
+  height: 47px;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.taskColumnContent {
+  background-color: #F1F1F1;
+  border-radius: 0 0 12px 12px;
+  min-height: 100px;
+}

@@ -10,7 +10,7 @@ import Color from "../../types/Color";
 import ControlHeading from "../../components/controlHeading/controlHeading";
 
 const SubjectPage: React.FC = () => {
-    const {isLoading, colors, randomColor} = useAppSelector(state => state.subject);
+    const {isLoading, colors} = useAppSelector(state => state.subject);
 
     const {setColors, setSubjects, setIsLoading, setRandomColor} = useActions();
 

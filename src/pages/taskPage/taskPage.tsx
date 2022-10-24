@@ -5,6 +5,8 @@ import FetchService from "../../services/fetchService";
 import Subject from "../../types/Subject";
 import {v4} from "uuid";
 import ControlHeading from "../../components/controlHeading/controlHeading";
+import TaskColumn from "../../components/taskColumn/taskColumn";
+
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
 
@@ -24,6 +26,22 @@ const TaskPage: React.FC = () => {
 
     const taskHeadingFontStyle = {
         color: subject.colors.fontColor
+    };
+
+    // column styles
+    const toDoColumnStyle = {
+        backgroundColor: "#EEDBDB",
+        color: "#C85959"
+    };
+
+    const inProcessColumnStyle = {
+        backgroundColor: "#F3F09E",
+        color: "#938D0E"
+    };
+
+    const completeColumnStyle = {
+        backgroundColor: "#157760",
+        color: "#8EDECB"
     };
 
     function renderTeachers(): React.ReactNode {
@@ -61,6 +79,23 @@ const TaskPage: React.FC = () => {
                     <h4 className="taskCounter" style={taskHeadingFontStyle}>
                         Tasks: {subject.tasks.length}
                     </h4>
+                </section>
+                <section className="taskColumns">
+                    <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
+                        <div>
+                            to do
+                        </div>
+                    </TaskColumn>
+                    <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
+                        <div>
+                            in process
+                        </div>
+                    </TaskColumn>
+                    <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
+                        <div>
+                            done
+                        </div>
+                    </TaskColumn>
                 </section>
             </section>
         </>
