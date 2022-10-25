@@ -1,10 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
 import SubjectSlice from "./reducers/subjectSlice";
+import TaskSlice from "./reducers/taskSlice";
 
 
 const store = configureStore({
     reducer: {
-        subject: SubjectSlice.reducer
+        subject: SubjectSlice.reducer,
+        task: TaskSlice.reducer
     }
 });
 

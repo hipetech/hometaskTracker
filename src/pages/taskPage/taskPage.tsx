@@ -1,26 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import "./taskPage.scss";
 import {useParams} from "react-router-dom";
 import FetchService from "../../services/fetchService";
-import Subject from "../../types/Subject";
 import {v4} from "uuid";
 import ControlHeading from "../../components/controlHeading/controlHeading";
 import TaskColumn from "../../components/taskColumn/taskColumn";
 import TaskStatus from "../../types/TaskStatus";
 import TaskCard from "../../components/taskCard/taskCard";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {useActions} from "../../hooks/useActions";
 
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
 
     const fetchService = new FetchService();
 
-    const [subject, setSubject] = useState<Subject>({
-        name: "",
-        _id: "",
-        tasks: [],
-        teachers: [],
-        colors: {_id: "", fontColor: "", backgroundColor: ""}
-    });
+    const {subject} = useAppSelector(state => state.task);
+    const {setSubject} = useActions();
 
     const taskHeadingStyle = {
         backgroundColor: subject.colors.backgroundColor

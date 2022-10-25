@@ -1,7 +1,7 @@
 import TaskStatus from "./TaskStatus";
 
 type Task = {
-    id: string,
+    _id: string,
     name: string,
     status: TaskStatus
 }

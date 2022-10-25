@@ -76,4 +76,8 @@ export default class FetchService {
     public async deleteSubject(id: string):  Promise<Subject> {
         return await this.deleteResource(`${this.url}/subject/${id}`);
     }
+
+    public async deleteTask(id: string): Promise<Task> {
+        return await this.deleteResource(`${this.url}/task/${id}`);
+    }
 }
