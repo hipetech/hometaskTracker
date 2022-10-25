@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import "./controlHeading.scss";
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../../hooks/useAppSelector";
+import {Button} from "@mui/material";
 
 interface ControlHeadingProps {
     backButton: boolean
@@ -10,30 +11,43 @@ interface ControlHeadingProps {
 const ControlHeading: React.FC<ControlHeadingProps> = ({backButton}) => {
     const {randomColor} = useAppSelector(state => state.subject);
 
-    const [languages, setLanguages] = useState<string[]>(["eng", "укр"]);
+    // const [languages, setLanguages] = useState<string[]>(["eng", "укр"]);
+
+
+    const headingButtonBackStyle = {
+        minWidth: "50px",
+        fontWeight: "500",
+        fontSize: "18px",
+        borderRadius: "12px",
+        padding: "5px 10px",
+        color: randomColor.fontColor,
+        position: "absolute",
+        backgroundColor: "#F0F0F0FF",
+        ":hover": {
+            backgroundColor: "#F0F0F0FF"
+        }
+    };
 
     function renderHeadingButton(): React.ReactNode {
         const node = (
-            <Link to={"/"} className="headingButton back" style={headingButtonFontStyle}>
-                Back
+            <Link to={"/"}>
+                <Button sx={{...headingButtonBackStyle, left: "0"}}>
+                    Back
+                </Button>
             </Link>
         );
 
         return backButton ? node : "";
     }
 
-    const headingButtonFontStyle = {
-        color: randomColor.fontColor
-    };
-
     return (
         <header className={"controlHeading"}>
             {
                 renderHeadingButton()
             }
-            <button className={"headingButton lang"} style={headingButtonFontStyle}>
-                eng
-            </button>
+            {/*<Button sx={{...headingButtonBackStyle, right: "0"}}>*/}
+            {/*    eng*/}
+            {/*</Button>*/}
         </header>
     );
 };
