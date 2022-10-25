@@ -20,7 +20,7 @@ const ControlHeading: React.FC<ControlHeadingProps> = ({backButton}) => {
         fontSize: "18px",
         borderRadius: "12px",
         padding: "5px 10px",
-        color: randomColor.fontColor,
+        color: randomColor.fontColor || "black",
         position: "absolute",
         backgroundColor: "#F0F0F0FF",
         ":hover": {

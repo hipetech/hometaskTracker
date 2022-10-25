@@ -9,9 +9,8 @@ interface TaskColumnHeadingColor {
 interface TaskColumnInterface {
     name: string,
     color: TaskColumnHeadingColor,
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactNode | React.ReactNode[];
 }
-
 
 const TaskColumn: React.FC<TaskColumnInterface> = ({name, color, children}) => {
     return (
@@ -23,7 +22,7 @@ const TaskColumn: React.FC<TaskColumnInterface> = ({name, color, children}) => {
                     }
                 </h4>
             </div>
-            <div className="taskColumnContent">
+            <div className={"taskColumnContent"}>
                 {
                     children
                 }

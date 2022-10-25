@@ -1,0 +1,32 @@
+.taskCardSection {
+  margin: 8px 12.5px;
+  width: 410px;
+  min-height: 50px;
+  background-color: #fffdfd;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+
+  h4 {
+    font-weight: 500;
+    font-size: 20px;
+    margin: 0 16px;
+  }
+
+  button {
+    div {
+      background-color: black;
+    }
+  }
+}
+
+.taskCardSection:first-child {
+  margin-top: 0;
+}
+
+.moreTaskCardButton {
+  margin: 0;
+}

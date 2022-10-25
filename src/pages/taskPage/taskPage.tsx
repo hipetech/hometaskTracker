@@ -6,6 +6,8 @@ import Subject from "../../types/Subject";
 import {v4} from "uuid";
 import ControlHeading from "../../components/controlHeading/controlHeading";
 import TaskColumn from "../../components/taskColumn/taskColumn";
+import TaskStatus from "../../types/TaskStatus";
+import TaskCard from "../../components/taskCard/taskCard";
 
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
@@ -47,12 +49,21 @@ const TaskPage: React.FC = () => {
     function renderTeachers(): React.ReactNode {
         return subject.teachers.map((teacher, index) => {
             const node = (value: string) => <h3 key={v4()} style={taskHeadingFontStyle}>{value}</h3>;
-
             if ((index + 1) !== subject.teachers.length) {
                 return node(teacher + ",");
             }
 
             return node(teacher);
+        });
+    }
+
+    function renderTasks(status: TaskStatus): React.ReactNode {
+        return subject.tasks.map((task) => {
+            if (task.status === status) {
+                return (
+                    <TaskCard task={task} key={v4()}/>
+                );
+            }
         });
     }
 
@@ -82,19 +93,19 @@ const TaskPage: React.FC = () => {
                 </section>
                 <section className="taskColumns">
                     <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
-                        <div>
-                            to do
-                        </div>
+                        {
+                            renderTasks(TaskStatus.toDo)
+                        }
                     </TaskColumn>
                     <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
-                        <div>
-                            in process
-                        </div>
+                        {
+                            renderTasks(TaskStatus.inProcess)
+                        }
                     </TaskColumn>
                     <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
-                        <div>
-                            done
-                        </div>
+                        {
+                            renderTasks(TaskStatus.complete)
+                        }
                     </TaskColumn>
                 </section>
             </section>
