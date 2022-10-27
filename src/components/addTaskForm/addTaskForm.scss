@@ -1,0 +1,19 @@
+@import "./../../styles/variables";
+
+.addTaskForm {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: $accentColor;
+
+  input[type='text'] {
+    width: 1155px;
+    height: 30px;
+  }
+}

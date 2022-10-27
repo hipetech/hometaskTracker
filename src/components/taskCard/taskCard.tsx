@@ -20,6 +20,8 @@ const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
 
     const [isTaskCardModalOpen, setIsTaskCardModalOpen] = useState<boolean>(false);
 
+    const fetchService = new FetchService();
+
     const {setSubject} = useActions();
 
     const {_id} = useParams<{ _id: string }>();
@@ -55,8 +57,6 @@ const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
             <div style={dotMoreTaskButtonStyle}></div>
         </IconButton>
     );
-
-    const fetchService = new FetchService();
 
     function deleteTask(id: string): void {
         fetchService.deleteTask(id)

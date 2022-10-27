@@ -3,6 +3,7 @@ import "./controlHeading.scss";
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {Button} from "@mui/material";
+import {controlButtonStyle} from "../../styles/materialUIStyles";
 
 interface ControlHeadingProps {
     backButton: boolean
@@ -14,24 +15,12 @@ const ControlHeading: React.FC<ControlHeadingProps> = ({backButton}) => {
     // const [languages, setLanguages] = useState<string[]>(["eng", "укр"]);
 
 
-    const headingButtonBackStyle = {
-        minWidth: "50px",
-        fontWeight: "500",
-        fontSize: "18px",
-        borderRadius: "12px",
-        padding: "5px 10px",
-        color: randomColor.fontColor || "black",
-        position: "absolute",
-        backgroundColor: "#F0F0F0FF",
-        ":hover": {
-            backgroundColor: "#F0F0F0FF"
-        }
-    };
+    const headingButtonBackStyle = controlButtonStyle(randomColor);
 
     function renderHeadingButton(): React.ReactNode {
         const node = (
             <Link to={"/"}>
-                <Button sx={{...headingButtonBackStyle, left: "0"}}>
+                <Button sx={{...headingButtonBackStyle, left: "0", position: "absolute"}}>
                     Back
                 </Button>
             </Link>

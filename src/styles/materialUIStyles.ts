@@ -25,3 +25,18 @@ export const cancelButtonStyle = (color: Color) => {
         marginBottom: "10px"
     };
 };
+
+export const controlButtonStyle = (color: Color) => {
+    return {
+        minWidth: "50px",
+        fontWeight: "500",
+        fontSize: "18px",
+        borderRadius: "12px",
+        padding: "5px 10px",
+        color: color.fontColor || "black",
+        backgroundColor: "#F0F0F0FF",
+        ":hover": {
+            backgroundColor: "#F0F0F0FF"
+        }
+    };
+};

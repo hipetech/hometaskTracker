@@ -7,6 +7,7 @@
   border-radius: 17px;
   padding: 22px;
   position: relative;
+  z-index: 2;
 
   h2 {
     font-size: 48px;
@@ -26,11 +27,22 @@
 
 .taskCounter {
   position: absolute;
-  right: 22px;
-  top: 95px;
+  right: 120px;
+  top: 65px;
   font-size: 22px;
   font-weight: 500;
   margin: 0;
+}
+
+.taskFormAndColumns {
+  position: relative;
+  bottom: 90px;
+  transition-duration: 0.2s;
+}
+
+.formVisible {
+  bottom: 0;
+  transition-duration: 0.2s;
 }
 
 .taskColumns {

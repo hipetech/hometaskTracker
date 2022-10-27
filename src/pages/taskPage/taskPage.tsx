@@ -9,14 +9,18 @@ import TaskStatus from "../../types/TaskStatus";
 import TaskCard from "../../components/taskCard/taskCard";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useActions} from "../../hooks/useActions";
+import AddTaskForm from "../../components/addTaskForm/addTaskForm";
+import {IconButton} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
 
     const fetchService = new FetchService();
 
-    const {subject} = useAppSelector(state => state.task);
-    const {setSubject} = useActions();
+    const {subject, isFormOpen} = useAppSelector(state => state.task);
+    const {setSubject, setIsFormOpen} = useActions();
 
     const taskHeadingStyle = {
         backgroundColor: subject.colors.backgroundColor
@@ -24,6 +28,19 @@ const TaskPage: React.FC = () => {
 
     const taskHeadingFontStyle = {
         color: subject.colors.fontColor
+    };
+
+    const addButtonStyle = {
+        color: subject.colors.backgroundColor,
+        backgroundColor: subject.colors.fontColor,
+        position: "absolute",
+        right: "22px",
+        top: "45px",
+        width: "60px",
+        height: "60px",
+        ":hover": {
+            color: subject.colors.fontColor
+        }
     };
 
     // column styles
@@ -65,7 +82,8 @@ const TaskPage: React.FC = () => {
 
     useEffect(() => {
         fetchService.getSubjectById(_id)
-            .then(setSubject);
+            .then(setSubject)
+            .then(() => setIsFormOpen(false));
     }, []);
 
     return (
@@ -86,23 +104,29 @@ const TaskPage: React.FC = () => {
                     <h4 className="taskCounter" style={taskHeadingFontStyle}>
                         Tasks: {subject.tasks.length}
                     </h4>
+                    <IconButton size={"large"} sx={addButtonStyle} onClick={() => setIsFormOpen(!isFormOpen)}>
+                        {isFormOpen ? <CloseIcon/> : <AddIcon/>}
+                    </IconButton>
                 </section>
-                <section className="taskColumns">
-                    <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
-                        {
-                            renderTasks(TaskStatus.toDo)
-                        }
-                    </TaskColumn>
-                    <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
-                        {
-                            renderTasks(TaskStatus.inProcess)
-                        }
-                    </TaskColumn>
-                    <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
-                        {
-                            renderTasks(TaskStatus.complete)
-                        }
-                    </TaskColumn>
+                <section className={`taskFormAndColumns ${isFormOpen ? "formVisible" : ""}`}>
+                    <AddTaskForm/>
+                    <div className="taskColumns">
+                        <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
+                            {
+                                renderTasks(TaskStatus.toDo)
+                            }
+                        </TaskColumn>
+                        <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
+                            {
+                                renderTasks(TaskStatus.inProcess)
+                            }
+                        </TaskColumn>
+                        <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
+                            {
+                                renderTasks(TaskStatus.complete)
+                            }
+                        </TaskColumn>
+                    </div>
                 </section>
             </section>
         </>
