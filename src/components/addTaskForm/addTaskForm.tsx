@@ -18,7 +18,11 @@ const AddTaskForm = () => {
     const buttonStyle = Object.assign(controlButtonStyle(subject.colors), {
         width: "150px",
         height: "50px",
-        backgroundColor: subject.colors.backgroundColor
+        backgroundColor: subject.colors.backgroundColor,
+        boxShadow:"0 0 1.5px 0 rgba(0, 0, 0, 0.26)",
+        ":hover": {
+            backgroundColor: subject.colors.backgroundColor
+        }
     });
 
     return (
