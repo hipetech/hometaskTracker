@@ -2,12 +2,19 @@ import Subject from "../types/Subject";
 import Color from "../types/Color";
 import config from "./config.json";
 import Task from "../types/Task";
+import TaskStatus from "../types/TaskStatus";
 
-interface postSubject {
+interface postSubjectDTO {
     name: string,
     teachers: string[],
     tasks: Task[],
     colors: string
+}
+
+interface postTaskDTO {
+    name: string,
+    status: TaskStatus,
+    subject: string
 }
 
 export default class FetchService {
@@ -56,8 +63,12 @@ export default class FetchService {
         return res.json();
     }
 
-    public async postSubject(body: postSubject): Promise<Subject> {
+    public async postSubject(body: postSubjectDTO): Promise<Subject> {
         return await this.postResource(`${this.url}/subject`, body);
+    }
+
+    public async postTask(body: postTaskDTO): Promise<Task> {
+        return await this.postResource(`${this.url}/task`, body);
     }
 
     private async deleteResource(url: string): Promise<any>  {
