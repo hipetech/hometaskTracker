@@ -16,7 +16,7 @@ interface TaskCardInterface {
 
 const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
 
-    const {randomColor} = useAppSelector(state => state.subject);
+    const {subject} = useAppSelector(state => state.task);
 
     const [isTaskCardModalOpen, setIsTaskCardModalOpen] = useState<boolean>(false);
 
@@ -32,14 +32,14 @@ const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
         justifyContent: "space-between",
         width: "30px",
         height: "80%",
-        color: randomColor.backgroundColor,
+        color: subject.colors.backgroundColor,
         position: "absolute",
         right: "0",
         marginRight: "4px"
     };
 
     const dotMoreTaskButtonStyle = {
-        backgroundColor: randomColor.fontColor,
+        backgroundColor: subject.colors.fontColor,
         width: "4px",
         height: "4px",
         borderRadius: "100%"
@@ -58,8 +58,13 @@ const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
         </IconButton>
     );
 
-    function deleteTask(id: string): void {
-        fetchService.deleteTask(id)
+    function deleteTask(): void {
+        const body = {
+            _id: task._id,
+            subject: subject._id
+        };
+
+        fetchService.deleteTask(body)
             .then(() => {
                 fetchService.getSubjectById(_id)
                     .then(setSubject);
@@ -68,7 +73,7 @@ const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
 
     const TaskCardModal: React.FC = () => (
         <ButtonGroup sx={buttonGroupStyle}>
-            <IconButton aria-label="delete" color="error" onClick={() => deleteTask(task._id)}>
+            <IconButton aria-label="delete" color="error" onClick={() => deleteTask()}>
                 <DeleteIcon/>
             </IconButton>
             {/*<IconButton aria-label="edit" color="default">*/}

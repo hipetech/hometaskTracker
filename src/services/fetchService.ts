@@ -17,6 +17,11 @@ interface postTaskDTO {
     subject: string
 }
 
+interface deleteTaskDTO {
+    _id: string,
+    subject: string
+}
+
 export default class FetchService {
     url: string;
 
@@ -71,10 +76,14 @@ export default class FetchService {
         return await this.postResource(`${this.url}/task`, body);
     }
 
-    private async deleteResource(url: string): Promise<any>  {
+    private async deleteResource(url: string, body: any = {}): Promise<any>  {
         const res = await fetch(url, {
             method: "DELETE",
-            mode: "cors"
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
         });
 
         if (!res.ok) {
@@ -88,7 +97,7 @@ export default class FetchService {
         return await this.deleteResource(`${this.url}/subject/${id}`);
     }
 
-    public async deleteTask(id: string): Promise<Task> {
-        return await this.deleteResource(`${this.url}/task/${id}`);
+    public async deleteTask(body: deleteTaskDTO): Promise<Task> {
+        return await this.deleteResource(`${this.url}/task`, body);
     }
 }
