@@ -80,10 +80,13 @@ const TaskPage: React.FC = () => {
         });
     }
 
+    function onOpenButtonClick(): void {
+        setIsFormOpen(!isFormOpen);
+    }
+
     useEffect(() => {
         fetchService.getSubjectById(_id)
-            .then(setSubject)
-            .then(() => setIsFormOpen(false));
+            .then(setSubject);
     }, []);
 
     return (
@@ -104,12 +107,12 @@ const TaskPage: React.FC = () => {
                     <h4 className="taskCounter" style={taskHeadingFontStyle}>
                         Tasks: {subject.tasks.length}
                     </h4>
-                    <IconButton size={"large"} sx={addButtonStyle} onClick={() => setIsFormOpen(!isFormOpen)}>
+                    <IconButton size={"large"} sx={addButtonStyle} onClick={onOpenButtonClick}>
                         {isFormOpen ? <CloseIcon/> : <AddIcon/>}
                     </IconButton>
                 </section>
                 <section className={`taskFormAndColumns ${isFormOpen ? "formVisible" : ""}`}>
-                    <AddTaskForm/>
+                    <AddTaskForm />
                     <div className="taskColumns">
                         <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
                             {
