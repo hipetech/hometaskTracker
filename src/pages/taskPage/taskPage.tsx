@@ -13,6 +13,7 @@ import AddTaskForm from "../../components/addTaskForm/addTaskForm";
 import {IconButton} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import {DragDropContext, Droppable} from "react-beautiful-dnd";
 
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
@@ -114,21 +115,28 @@ const TaskPage: React.FC = () => {
                 <section className={`taskFormAndColumns ${isFormOpen ? "formVisible" : ""}`}>
                     <AddTaskForm />
                     <div className="taskColumns">
-                        <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
-                            {
-                                renderTasks(TaskStatus.toDo)
-                            }
-                        </TaskColumn>
-                        <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
-                            {
-                                renderTasks(TaskStatus.inProcess)
-                            }
-                        </TaskColumn>
-                        <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
-                            {
-                                renderTasks(TaskStatus.complete)
-                            }
-                        </TaskColumn>
+                        <DragDropContext onDragEnd={}>
+                            <Droppable droppableId={}>
+                                <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
+                                    {
+                                        renderTasks(TaskStatus.toDo)
+                                    }
+                                </TaskColumn>
+                            </Droppable>
+                            <Droppable droppableId={}>
+                                <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
+                                    {
+                                        renderTasks(TaskStatus.inProcess)
+                                    }
+                                </TaskColumn>                            </Droppable>
+                            <Droppable droppableId={}>
+                                <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
+                                    {
+                                        renderTasks(TaskStatus.complete)
+                                    }
+                                </TaskColumn>
+                            </Droppable>
+                        </DragDropContext>
                     </div>
                 </section>
             </section>

@@ -9,12 +9,14 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FetchService from "../../services/fetchService";
 import {useActions} from "../../hooks/useActions";
 import {useParams} from "react-router-dom";
+import {Draggable} from "react-beautiful-dnd";
 
 interface TaskCardInterface {
-    task: Task
+    task: Task,
+    index: number
 }
 
-const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
+const TaskCard: React.FC<TaskCardInterface> = ({task, index}) => {
 
     const {subject} = useAppSelector(state => state.task);
 
@@ -86,16 +88,18 @@ const TaskCard: React.FC<TaskCardInterface> = ({task}) => {
     );
 
     return (
-        <section className="taskCardSection">
-            <h4>
+        <Draggable draggableId={task._id} index={index}>
+            <section className="taskCardSection">
+                <h4>
+                    {
+                        task.name
+                    }
+                </h4>
                 {
-                    task.name
+                    isTaskCardModalOpen ? <TaskCardModal/> : <TaskMoreButton/>
                 }
-            </h4>
-            {
-                isTaskCardModalOpen ? <TaskCardModal/> : <TaskMoreButton/>
-            }
-        </section>
+            </section>
+        </Draggable>
     );
 };
 
