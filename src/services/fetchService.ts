@@ -22,6 +22,11 @@ interface deleteTaskDTO {
     subject: string
 }
 
+interface putTaskDTO {
+    _id: string,
+    status: TaskStatus
+}
+
 export default class FetchService {
     url: string;
 
@@ -76,7 +81,7 @@ export default class FetchService {
         return await this.postResource(`${this.url}/task`, body);
     }
 
-    private async deleteResource(url: string, body: any = {}): Promise<any>  {
+    private async deleteResource(url: string, body: any = {}): Promise<any> {
         const res = await fetch(url, {
             method: "DELETE",
             mode: "cors",
@@ -93,11 +98,32 @@ export default class FetchService {
         return res.json();
     }
 
-    public async deleteSubject(id: string):  Promise<Subject> {
+    public async deleteSubject(id: string): Promise<Subject> {
         return await this.deleteResource(`${this.url}/subject/${id}`);
     }
 
     public async deleteTask(body: deleteTaskDTO): Promise<Task> {
         return await this.deleteResource(`${this.url}/task`, body);
+    }
+
+    private async putResource(url: string, body: any = {}): Promise<any> {
+        const res = await fetch(url, {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+            throw new Error(`Could not put ${url}, status: ${res.status}`);
+        }
+
+        return res.json();
+    }
+
+    public async putTask(body: putTaskDTO): Promise<Task> {
+        return await this.putResource(`${this.url}/task`, body);
     }
 }
