@@ -13,7 +13,7 @@ import AddTaskForm from "../../components/addTaskForm/addTaskForm";
 import {IconButton} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import {DragDropContext, Droppable} from "react-beautiful-dnd";
+import {DragDropContext} from "react-beautiful-dnd";
 
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
@@ -60,6 +60,12 @@ const TaskPage: React.FC = () => {
         color: "#8EDECB"
     };
 
+    const columns = [
+        {status: TaskStatus.toDo, color: toDoColumnStyle},
+        {status: TaskStatus.inProcess, color: inProcessColumnStyle},
+        {status: TaskStatus.complete, color: completeColumnStyle}
+    ];
+
     function renderTeachers(): React.ReactNode {
         return subject.teachers.map((teacher, index) => {
             const node = (value: string) => <h3 key={v4()} style={taskHeadingFontStyle}>{value}</h3>;
@@ -72,17 +78,33 @@ const TaskPage: React.FC = () => {
     }
 
     function renderTasks(status: TaskStatus): React.ReactNode {
-        return subject.tasks.map((task) => {
+        return subject.tasks.map((task, index) => {
             if (task.status === status) {
                 return (
-                    <TaskCard task={task} key={v4()}/>
+                    <TaskCard task={task} key={v4()} index={index}/>
                 );
             }
         });
     }
 
+    function renderColumn(): React.ReactNode {
+        return columns.map(elem => {
+            return (
+                <TaskColumn name={elem.status} color={elem.color} key={v4()}>
+                    {
+                        renderTasks(elem.status)
+                    }
+                </TaskColumn>
+            );
+        });
+    }
+
     function onOpenButtonClick(): void {
         setIsFormOpen(!isFormOpen);
+    }
+
+    function onDragEnd(): void {
+        console.log("hello world");
     }
 
     useEffect(() => {
@@ -113,29 +135,12 @@ const TaskPage: React.FC = () => {
                     </IconButton>
                 </section>
                 <section className={`taskFormAndColumns ${isFormOpen ? "formVisible" : ""}`}>
-                    <AddTaskForm />
+                    <AddTaskForm/>
                     <div className="taskColumns">
-                        <DragDropContext onDragEnd={}>
-                            <Droppable droppableId={}>
-                                <TaskColumn name={"TO DO"} color={toDoColumnStyle}>
-                                    {
-                                        renderTasks(TaskStatus.toDo)
-                                    }
-                                </TaskColumn>
-                            </Droppable>
-                            <Droppable droppableId={}>
-                                <TaskColumn name={"IN PROCESS"} color={inProcessColumnStyle}>
-                                    {
-                                        renderTasks(TaskStatus.inProcess)
-                                    }
-                                </TaskColumn>                            </Droppable>
-                            <Droppable droppableId={}>
-                                <TaskColumn name={"COMPLETE"} color={completeColumnStyle}>
-                                    {
-                                        renderTasks(TaskStatus.complete)
-                                    }
-                                </TaskColumn>
-                            </Droppable>
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            {
+                                renderColumn()
+                            }
                         </DragDropContext>
                     </div>
                 </section>

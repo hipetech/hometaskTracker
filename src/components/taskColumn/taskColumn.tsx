@@ -1,5 +1,7 @@
 import React from "react";
 import "./taskColunm.scss";
+import {Droppable} from "react-beautiful-dnd";
+import {v4} from "uuid";
 
 interface TaskColumnHeadingColor {
     backgroundColor: string,
@@ -14,20 +16,33 @@ interface TaskColumnInterface {
 
 const TaskColumn: React.FC<TaskColumnInterface> = ({name, color, children}) => {
     return (
-        <section className={"taskColumnSection"}>
-            <div className={"taskColumnHeading"} style={color}>
-                <h4>
-                    {
-                        name
-                    }
-                </h4>
-            </div>
-            <div className={"taskColumnContent"}>
-                {
-                    children
+        <Droppable droppableId={v4()}>
+            {
+                (provided) => {
+                    return (
+                        <section className={"taskColumnSection"}>
+                            <div className={"taskColumnHeading"} style={color}>
+                                <h4>
+                                    {
+                                        name
+                                    }
+                                </h4>
+                            </div>
+                            <div className={"taskColumnContent"}
+                                 ref={provided.innerRef}
+                                 {...provided.droppableProps}>
+                                {
+                                    children
+                                }
+                                {
+                                    provided.placeholder
+                                }
+                            </div>
+                        </section>
+                    );
                 }
-            </div>
-        </section>
+            }
+        </Droppable>
     );
 };
 

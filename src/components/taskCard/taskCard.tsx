@@ -87,18 +87,28 @@ const TaskCard: React.FC<TaskCardInterface> = ({task, index}) => {
         </ButtonGroup>
     );
 
+
     return (
         <Draggable draggableId={task._id} index={index}>
-            <section className="taskCardSection">
-                <h4>
-                    {
-                        task.name
-                    }
-                </h4>
-                {
-                    isTaskCardModalOpen ? <TaskCardModal/> : <TaskMoreButton/>
+            {
+                (provided) => {
+                    return (
+                        <section className="taskCardSection"
+                                 ref={provided.innerRef}
+                                 {...provided.draggableProps}
+                                 {...provided.dragHandleProps}>
+                            <h4>
+                                {
+                                    task.name
+                                }
+                            </h4>
+                            {
+                                isTaskCardModalOpen ? <TaskCardModal/> : <TaskMoreButton/>
+                            }
+                        </section>
+                    );
                 }
-            </section>
+            }
         </Draggable>
     );
 };
