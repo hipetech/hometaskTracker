@@ -1,6 +1,6 @@
 import React from "react";
 import "./taskColunm.scss";
-import {Droppable, DroppableStateSnapshot} from "react-beautiful-dnd";
+import {Droppable} from "react-beautiful-dnd";
 
 interface TaskColumnHeadingColor {
     backgroundColor: string,
@@ -15,14 +15,10 @@ interface TaskColumnInterface {
 
 const TaskColumn: React.FC<TaskColumnInterface> = ({name, color, children}) => {
 
-    const isDraggingOver = (snapshot: DroppableStateSnapshot) => (
-        snapshot.isDraggingOver ? "isDraggingStart" : "isDraggingOver"
-    );
-
     return (
         <Droppable droppableId={name}>
             {
-                (provided, snapshot) => {
+                (provided) => {
                     return (
                         <section className={"taskColumnSection"}>
                             <div className={"taskColumnHeading"} style={color}>
@@ -32,7 +28,7 @@ const TaskColumn: React.FC<TaskColumnInterface> = ({name, color, children}) => {
                                     }
                                 </h4>
                             </div>
-                            <div className={`taskColumnContent ${isDraggingOver(snapshot)}`}
+                            <div className={"taskColumnContent"}
                                  ref={provided.innerRef} {...provided.droppableProps}>
                                 {
                                     children

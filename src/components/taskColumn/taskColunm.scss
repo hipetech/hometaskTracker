@@ -15,21 +15,11 @@
 }
 
 .taskColumnContent {
-  background-color: #F1F1F1;
   border-radius: 0 0 12px 12px;
   padding-top: 6px;
   padding-bottom: 6px;
   min-height: 60px;
   display: flex;
   flex-direction: column;
-}
-
-.isDraggingStart {
-  background-color: #eaeaea;
-  transition-duration: 0.5s;
-}
-
-.isDraggingOver {
-  transition-duration: 0.5s;
 }
 
