@@ -15,6 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import {DragDropContext, DropResult} from "react-beautiful-dnd";
 import Subject from "../../types/Subject";
+import Task from "../../types/Task";
 
 const TaskPage: React.FC = () => {
     const {_id} = useParams<{ _id: string }>();
@@ -106,7 +107,48 @@ const TaskPage: React.FC = () => {
         setIsFormOpen(!isFormOpen);
     }
 
-    function onDragEnd(result: DropResult): void {
+    const tmpTask = (droppableId: string, task: Task): Task => (
+        {
+            _id: task._id,
+            name: task.name,
+            status: droppableId as TaskStatus,
+            subject: task.subject
+        }
+    );
+
+    const tmpSubject = (tmpTasks: Task[], subject: Subject) => (
+        {
+            _id: subject._id,
+            name: subject.name,
+            teachers: subject.teachers,
+            tasks: tmpTasks,
+            colors: subject.colors
+        }
+    );
+
+    function setSubjectOnDragEnd(draggableId: string, droppableId: string): void {
+        const tmpTasks = [...subject.tasks];
+        const searchableTask = tmpTasks.find(task => task._id === draggableId);
+
+        if (searchableTask) {
+            const index = tmpTasks.indexOf(searchableTask);
+
+            tmpTasks[index] = tmpTask(droppableId, subject.tasks[index]);
+
+            setSubject(tmpSubject(tmpTasks, subject));
+        }
+    }
+
+    async function putTaskOnDragEnd(draggableId: string, droppableId: string): Promise<void> {
+        const taskBody = {
+            _id: draggableId,
+            status: droppableId as TaskStatus
+        };
+
+        await fetchService.putTask(taskBody);
+    }
+
+    async function onDragEnd(result: DropResult): Promise<void> {
         const {destination, source, draggableId} = result;
 
         if (!destination) return;
@@ -116,39 +158,9 @@ const TaskPage: React.FC = () => {
 
         if (isDroppable && isIndex) return;
 
-        const tmpTasks = [...subject.tasks];
-        const searchableTask = tmpTasks.find(task => task._id === draggableId);
+        setSubjectOnDragEnd(draggableId, destination.droppableId);
 
-        if (searchableTask) {
-            const index = tmpTasks.indexOf(searchableTask);
-            const tmpTask = subject.tasks[index];
-
-            tmpTasks[index] = {
-                _id: tmpTask._id,
-                name: tmpTask.name,
-                status: destination.droppableId as TaskStatus,
-                subject: tmpTask.subject
-            };
-
-            const tmpSubject: Subject = {
-                _id: subject._id,
-                name: subject.name,
-                teachers: subject.teachers,
-                tasks: tmpTasks,
-                colors: subject.colors
-            };
-
-            setSubject(tmpSubject);
-
-        }
-
-        const taskBody = {
-            _id: draggableId,
-            status: destination.droppableId as TaskStatus
-        };
-
-        fetchService.putTask(taskBody);
-
+        await putTaskOnDragEnd(draggableId, destination.droppableId);
     }
 
     useEffect(() => {
