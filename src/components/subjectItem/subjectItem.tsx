@@ -89,7 +89,7 @@ const SubjectItem: React.FC<SubjectItemProps> = ({subject}) => {
                     <div className="subjectCounter">
                         <h2 style={subjectItemFontStyle}>
                             {
-                                subject.tasks.length
+                                subject.toDo.length + subject.inProcess.length + subject.complete.length
                             }
                         </h2>
                     </div>

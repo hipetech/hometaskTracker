@@ -7,7 +7,15 @@ export interface TaskState {
 }
 
 const initialState: TaskState = {
-    subject: {_id: "", name: "", tasks: [], colors: {_id: "", backgroundColor: "", fontColor: ""}, teachers: []},
+    subject: {
+        _id: "",
+        name: "",
+        toDo: [],
+        inProcess: [],
+        complete: [],
+        colors: {_id: "", backgroundColor: "", fontColor: ""},
+        teachers: []
+    },
     isFormOpen: false
 };
 

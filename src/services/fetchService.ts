@@ -7,7 +7,9 @@ import TaskStatus from "../types/TaskStatus";
 interface postSubjectDTO {
     name: string,
     teachers: string[],
-    tasks: Task[],
+    toDo: Task[],
+    inProcess: Task[],
+    complete: Task[],
     colors: string
 }
 
@@ -27,6 +29,13 @@ interface putTaskDTO {
     status: TaskStatus
 }
 
+interface putSubjectDTO {
+    _id: string,
+    toDo: string[],
+    inProcess: string[],
+    complete: string[]
+}
+
 export default class FetchService {
     url: string;
 
@@ -34,6 +43,7 @@ export default class FetchService {
         this.url = config.url;
     }
 
+    // get
     private async getResource(url: string): Promise<any> {
         const res = await fetch(url);
 
@@ -56,6 +66,7 @@ export default class FetchService {
         return await this.getResource(`${this.url}/subject/${id}`);
     }
 
+    // post
     private async postResource(url: string, body: any): Promise<any> {
         const res = await fetch(url, {
             method: "POST",
@@ -81,6 +92,7 @@ export default class FetchService {
         return await this.postResource(`${this.url}/task`, body);
     }
 
+    // delete
     private async deleteResource(url: string, body: any = {}): Promise<any> {
         const res = await fetch(url, {
             method: "DELETE",
@@ -106,6 +118,7 @@ export default class FetchService {
         return await this.deleteResource(`${this.url}/task`, body);
     }
 
+    // put
     private async putResource(url: string, body: any = {}): Promise<any> {
         const res = await fetch(url, {
             method: "PUT",
@@ -125,5 +138,9 @@ export default class FetchService {
 
     public async putTask(body: putTaskDTO): Promise<Task> {
         return await this.putResource(`${this.url}/task`, body);
+    }
+
+    public async putSubject(body: putSubjectDTO): Promise<Subject> {
+        return await this.putResource(`${this.url}/subject`, body);
     }
 }

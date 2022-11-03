@@ -5,7 +5,9 @@ interface Subject {
     _id: string,
     name: string,
     teachers: string[],
-    tasks: Task[],
+    toDo: Task[],
+    inProcess: Task[],
+    complete: Task[],
     colors: Color
 }
 

@@ -124,7 +124,9 @@ const AddModal: React.FC = () => {
         const body = {
             name: subjectName,
             teachers: teachers,
-            tasks: [],
+            toDo: [],
+            inProcess: [],
+            complete: [],
             colors: colorValue._id
         };
 

@@ -13,7 +13,7 @@ import AddTaskForm from "../../components/addTaskForm/addTaskForm";
 import {IconButton} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import {DragDropContext, DropResult} from "react-beautiful-dnd";
+import {DragDropContext, DraggableLocation, DropResult} from "react-beautiful-dnd";
 import Subject from "../../types/Subject";
 import Task from "../../types/Task";
 
@@ -24,8 +24,6 @@ const TaskPage: React.FC = () => {
 
     const {subject, isFormOpen} = useAppSelector(state => state.task);
     const {setSubject, setIsFormOpen} = useActions();
-
-    const {subjects} = useAppSelector(state => state.subject);
 
     const taskHeadingStyle = {
         backgroundColor: subject.colors.backgroundColor
@@ -81,8 +79,26 @@ const TaskPage: React.FC = () => {
         });
     }
 
+    function setTaskArr(status: TaskStatus, subject: Subject, arr: Task[]): void {
+        switch (status) {
+            case TaskStatus.toDo:
+                subject.toDo = arr;
+                break;
+            case TaskStatus.inProcess:
+                subject.inProcess = arr;
+                break;
+            case TaskStatus.complete:
+                subject.complete = arr;
+                break;
+        }
+    }
+
     function renderTasks(status: TaskStatus): React.ReactNode {
-        return subject.tasks.map((task, index) => {
+        const type: Task[] = [];
+
+        setTaskArr(status, subject, type);
+
+        return type.map((task, index) => {
             if (task.status === status) {
                 return (
                     <TaskCard task={task} key={v4()} index={index}/>
@@ -116,27 +132,69 @@ const TaskPage: React.FC = () => {
         }
     );
 
-    const tmpSubject = (tmpTasks: Task[], subject: Subject) => (
-        {
+    function getTasksByStatus(status: TaskStatus, subject: Subject): Task[] {
+        switch (status) {
+            case TaskStatus.toDo:
+                return [...subject.toDo];
+            case TaskStatus.inProcess:
+                return [...subject.inProcess];
+            case TaskStatus.complete:
+                return [...subject.complete];
+        }
+    }
+
+    async function putSubjectOnDragEnd(subject: Subject): Promise<void> {
+        const subjectBody = {
             _id: subject._id,
-            name: subject.name,
-            teachers: subject.teachers,
-            tasks: tmpTasks,
-            colors: subject.colors
+            toDo: subject.toDo.map(elem => elem._id),
+            inProcess: subject.inProcess.map(elem => elem._id),
+            complete: subject.complete.map(elem => elem._id)
+        };
+
+        await fetchService.putSubject(subjectBody);
+    }
+
+    function changeTaskStatus(destination: DraggableLocation, source: DraggableLocation, task: Task, tmpSubject: Subject): void {
+        const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
+        const targetArr = getTasksByStatus(destination.droppableId as TaskStatus, subject);
+
+        task = tmpTask(destination.droppableId, task);
+
+        sourceArr.splice(source.index, 1);
+
+        targetArr.splice(destination.index, 0, task);
+
+        setTaskArr(source.droppableId as TaskStatus, tmpSubject, sourceArr);
+        setTaskArr(destination.droppableId as TaskStatus, tmpSubject, targetArr);
+    }
+
+    function changeTaskPosition(destination: DraggableLocation, source: DraggableLocation, task: Task, tmpSubject: Subject): void {
+        const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
+
+        sourceArr.splice(source.index, 1);
+
+        sourceArr.splice(destination.index, 0, task);
+
+        setTaskArr(source.droppableId as TaskStatus, tmpSubject, sourceArr);
+    }
+
+    async function setSubjectOnDragEnd(result: DropResult, destination: DraggableLocation): Promise<void> {
+        const {source, draggableId} = result;
+
+        const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
+        const task = sourceArr.find(task => task._id === draggableId);
+
+        const tmpSubject = {...subject};
+
+        if (source.droppableId !== destination.droppableId && task) {
+            changeTaskStatus(destination, source, task, tmpSubject);
+        } else if (task) {
+            changeTaskPosition(destination, source, task, tmpSubject);
         }
-    );
 
-    function setSubjectOnDragEnd(draggableId: string, droppableId: string): void {
-        const tmpTasks = [...subject.tasks];
-        const searchableTask = tmpTasks.find(task => task._id === draggableId);
+        setSubject(tmpSubject);
 
-        if (searchableTask) {
-            const index = tmpTasks.indexOf(searchableTask);
-
-            tmpTasks[index] = tmpTask(droppableId, subject.tasks[index]);
-
-            setSubject(tmpSubject(tmpTasks, subject));
-        }
+        await putSubjectOnDragEnd(tmpSubject);
     }
 
     async function putTaskOnDragEnd(draggableId: string, droppableId: string): Promise<void> {
@@ -153,12 +211,9 @@ const TaskPage: React.FC = () => {
 
         if (!destination) return;
 
-        const isDroppable = destination.droppableId === source.droppableId;
-        const isIndex = destination.index === source.index;
+        if (destination.droppableId === source.droppableId && destination.index === source.index) return;
 
-        if (isDroppable && isIndex) return;
-
-        setSubjectOnDragEnd(draggableId, destination.droppableId);
+        await setSubjectOnDragEnd(result, destination);
 
         await putTaskOnDragEnd(draggableId, destination.droppableId);
     }
@@ -166,6 +221,7 @@ const TaskPage: React.FC = () => {
     useEffect(() => {
         fetchService.getSubjectById(_id)
             .then(setSubject);
+
     }, []);
 
 
@@ -185,7 +241,7 @@ const TaskPage: React.FC = () => {
                         }
                     </div>
                     <h4 className="taskCounter" style={taskHeadingFontStyle}>
-                        Tasks: {subject.tasks.length}
+                        Tasks: {subject.toDo.length + subject.inProcess.length + subject.complete.length}
                     </h4>
                     <IconButton size={"large"} sx={addButtonStyle} onClick={onOpenButtonClick}>
                         {isFormOpen ? <CloseIcon/> : <AddIcon/>}
