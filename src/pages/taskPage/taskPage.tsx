@@ -79,24 +79,20 @@ const TaskPage: React.FC = () => {
         });
     }
 
-    function setTaskArr(status: TaskStatus, subject: Subject, arr: Task[]): void {
+    function renderTasks(status: TaskStatus): React.ReactNode {
+        let type = [];
+
         switch (status) {
             case TaskStatus.toDo:
-                subject.toDo = arr;
+                type = [...subject.toDo];
                 break;
             case TaskStatus.inProcess:
-                subject.inProcess = arr;
+                type = [...subject.inProcess];
                 break;
             case TaskStatus.complete:
-                subject.complete = arr;
+                type = [...subject.complete];
                 break;
         }
-    }
-
-    function renderTasks(status: TaskStatus): React.ReactNode {
-        const type: Task[] = [];
-
-        setTaskArr(status, subject, type);
 
         return type.map((task, index) => {
             if (task.status === status) {
@@ -125,10 +121,8 @@ const TaskPage: React.FC = () => {
 
     const tmpTask = (droppableId: string, task: Task): Task => (
         {
-            _id: task._id,
-            name: task.name,
+            ...task,
             status: droppableId as TaskStatus,
-            subject: task.subject
         }
     );
 
@@ -145,7 +139,7 @@ const TaskPage: React.FC = () => {
 
     async function putSubjectOnDragEnd(subject: Subject): Promise<void> {
         const subjectBody = {
-            _id: subject._id,
+            ...subject,
             toDo: subject.toDo.map(elem => elem._id),
             inProcess: subject.inProcess.map(elem => elem._id),
             complete: subject.complete.map(elem => elem._id)
@@ -154,7 +148,32 @@ const TaskPage: React.FC = () => {
         await fetchService.putSubject(subjectBody);
     }
 
-    function changeTaskStatus(destination: DraggableLocation, source: DraggableLocation, task: Task, tmpSubject: Subject): void {
+    function setTaskArr(status: TaskStatus, subject: Subject, arr: Task[]): Subject {
+        switch (status) {
+            case TaskStatus.toDo:
+                subject = {
+                    ...subject,
+                    toDo: arr
+                };
+                break;
+            case TaskStatus.inProcess:
+                subject = {
+                    ...subject,
+                    inProcess: arr
+                };
+                break;
+            case TaskStatus.complete:
+                subject = {
+                    ...subject,
+                    complete: arr
+                };
+                break;
+        }
+
+        return subject;
+    }
+
+    function changeTaskStatus(destination: DraggableLocation, source: DraggableLocation, task: Task, tmpSubject: Subject): Subject {
         const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
         const targetArr = getTasksByStatus(destination.droppableId as TaskStatus, subject);
 
@@ -164,37 +183,22 @@ const TaskPage: React.FC = () => {
 
         targetArr.splice(destination.index, 0, task);
 
-        setTaskArr(source.droppableId as TaskStatus, tmpSubject, sourceArr);
-        setTaskArr(destination.droppableId as TaskStatus, tmpSubject, targetArr);
+        tmpSubject = setTaskArr(source.droppableId as TaskStatus, tmpSubject, sourceArr);
+        tmpSubject = setTaskArr(destination.droppableId as TaskStatus, tmpSubject, targetArr);
+
+        return tmpSubject;
     }
 
-    function changeTaskPosition(destination: DraggableLocation, source: DraggableLocation, task: Task, tmpSubject: Subject): void {
+    function changeTaskPosition(destination: DraggableLocation, source: DraggableLocation, task: Task, tmpSubject: Subject): Subject {
         const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
 
         sourceArr.splice(source.index, 1);
 
         sourceArr.splice(destination.index, 0, task);
 
-        setTaskArr(source.droppableId as TaskStatus, tmpSubject, sourceArr);
-    }
+        tmpSubject = setTaskArr(source.droppableId as TaskStatus, tmpSubject, sourceArr);
 
-    async function setSubjectOnDragEnd(result: DropResult, destination: DraggableLocation): Promise<void> {
-        const {source, draggableId} = result;
-
-        const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
-        const task = sourceArr.find(task => task._id === draggableId);
-
-        const tmpSubject = {...subject};
-
-        if (source.droppableId !== destination.droppableId && task) {
-            changeTaskStatus(destination, source, task, tmpSubject);
-        } else if (task) {
-            changeTaskPosition(destination, source, task, tmpSubject);
-        }
-
-        setSubject(tmpSubject);
-
-        await putSubjectOnDragEnd(tmpSubject);
+        return tmpSubject;
     }
 
     async function putTaskOnDragEnd(draggableId: string, droppableId: string): Promise<void> {
@@ -206,6 +210,25 @@ const TaskPage: React.FC = () => {
         await fetchService.putTask(taskBody);
     }
 
+    async function setSubjectOnDragEnd(result: DropResult, destination: DraggableLocation): Promise<void> {
+        const {source, draggableId} = result;
+
+        const sourceArr = getTasksByStatus(source.droppableId as TaskStatus, subject);
+        const task = sourceArr.find(task => task._id === draggableId);
+
+        let tmpSubject = {...subject};
+
+        if (source.droppableId !== destination.droppableId && task) {
+            tmpSubject = changeTaskStatus(destination, source, task, tmpSubject);
+        } else if (task) {
+            tmpSubject = changeTaskPosition(destination, source, task, tmpSubject);
+        }
+
+        setSubject(tmpSubject);
+
+        await putSubjectOnDragEnd(tmpSubject);
+    }
+
     async function onDragEnd(result: DropResult): Promise<void> {
         const {destination, source, draggableId} = result;
 
@@ -214,7 +237,6 @@ const TaskPage: React.FC = () => {
         if (destination.droppableId === source.droppableId && destination.index === source.index) return;
 
         await setSubjectOnDragEnd(result, destination);
-
         await putTaskOnDragEnd(draggableId, destination.droppableId);
     }
 
