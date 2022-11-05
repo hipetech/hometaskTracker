@@ -2,11 +2,12 @@ import React from "react";
 import "./subjectsHeading.scss";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useActions} from "../../hooks/useActions";
+import SearchingModal from "../searchigModal/searchingModal";
 
 const SubjectsHeading: React.FC = () => {
-    const {randomColor, isDeleteMode} = useAppSelector(state => state.subject);
-    const {setIsModalOpen, setIsDeleteMode} = useActions();
+    const {randomColor, isDeleteMode, isSearchModalOpen} = useAppSelector(state => state.subject);
 
+    const {setIsModalOpen, setIsDeleteMode, setIsSearchModalOpen} = useActions();
 
     function onModalOpen(): void {
         setIsModalOpen(true);
@@ -29,6 +30,10 @@ const SubjectsHeading: React.FC = () => {
         backgroundColor: "#c7c7c7"
     };
 
+    function onSearchButtonClick(): void {
+        setIsSearchModalOpen(!isSearchModalOpen);
+        console.log(isSearchModalOpen);
+    }
 
     return (
         <>
@@ -45,11 +50,14 @@ const SubjectsHeading: React.FC = () => {
                             onClick={() => setIsDeleteMode(!isDeleteMode)}>
                         Delete
                     </button>
-                    <button className={"searchButton"}>
+                    <button className={"searchButton"} onClick={onSearchButtonClick}>
                         <span className={"searchButtonCircle"} style={searchCircleStyle}></span>
                         <span className={"searchButtonSquare"} style={searchStyle}></span>
                     </button>
                 </div>
+                {
+                    isSearchModalOpen ? <SearchingModal />: null
+                }
             </header>
         </>
     );

@@ -1,0 +1,60 @@
+@import "./../../styles/variables";
+
+.searchingModalSection {
+  position: absolute;
+  width: 75%;
+  min-height: 150px;
+  background-color: $accentColor;
+  z-index: 4;
+  left: 50%;
+  transform: translate(-50%);
+  top: 0;
+  border-radius: 26px;
+  box-shadow: $shadow;
+  padding: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    width: 99%;
+    height: 25px;
+    border: none;
+    border-bottom: 1.5px #ababab solid;
+    font-size: 20px;
+    background-color: $accentColor;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+}
+
+.searchingResult {
+  width: 100%;
+}
+
+.searchingItemSection {
+  width: 100%;
+  height: 45px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 1px;
+
+  h3 {
+    width: inherit;
+    margin: 0 10px;
+  }
+}
+
+.searchingItemSection:hover {
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 3px;
+}
+
+
+

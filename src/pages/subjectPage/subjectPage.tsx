@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import SubjectsHeading from "../../components/subjectHeading/subjectsHeading";
+import SubjectsHeading from "../../components/subjectsHeading/subjectsHeading";
 import SubjectItems from "../../components/subjectItems/subjectItems";
 import LoadingAnimation from "../../components/loadingAnimation/loadingAnimation";
 import {useAppSelector} from "../../hooks/useAppSelector";
@@ -10,9 +10,9 @@ import Color from "../../types/Color";
 import ControlHeading from "../../components/controlHeading/controlHeading";
 
 const SubjectPage: React.FC = () => {
-    const {isLoading, colors} = useAppSelector(state => state.subject);
+    const {isLoading, colors, isSearchModalOpen, isModalOpen} = useAppSelector(state => state.subject);
 
-    const {setColors, setSubjects, setIsLoading, setRandomColor} = useActions();
+    const {setColors, setSubjects, setIsLoading, setRandomColor, setIsSearchModalOpen, setIsModalOpen} = useActions();
 
     const subjectService: FetchService = new FetchService();
 
@@ -40,12 +40,18 @@ const SubjectPage: React.FC = () => {
         }
     }
 
+    function onModalClose(): void {
+        if (isModalOpen) setIsModalOpen(false);
+        if (isSearchModalOpen) setIsSearchModalOpen(false);
+    }
+
+
     useEffect(onRequestColors, []);
     useEffect(onRequestSubjects, []);
 
     return (
         <>
-            <ControlHeading backButton={false} />
+            <ControlHeading backButton={false}/>
             <section className="subjectPageSection">
                 {
                     isLoading ? <SubjectsHeading/> : ""
@@ -53,7 +59,9 @@ const SubjectPage: React.FC = () => {
                 {
                     isLoading ? <SubjectItems/> : <LoadingAnimation/>
                 }
-                <AddModal />
+                <AddModal/>
+                <div className={`addModalBackground ${isModalOpen || isSearchModalOpen ? "" : "disable"}`}
+                     onClick={onModalClose}></div>
             </section>
         </>
     );

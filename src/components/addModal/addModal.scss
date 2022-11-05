@@ -51,15 +51,4 @@
   background-color: aqua;
 }
 
-.addModalBackground {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  backdrop-filter: blur(1px);
-}
-
 

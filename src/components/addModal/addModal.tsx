@@ -12,8 +12,8 @@ import FetchService from "../../services/fetchService";
 
 const AddModal: React.FC = () => {
 
-    const {randomColor, isModalOpen, colors} = useAppSelector(state => state.subject);
-    const {setIsModalOpen, setSubjects} = useActions();
+    const {randomColor, isModalOpen, colors, isSearchModalOpen} = useAppSelector(state => state.subject);
+    const {setIsModalOpen, setSubjects, setIsSearchModalOpen} = useActions();
 
     const [currentInputId, setCurrentInputId] = useState<number>();
 
@@ -152,7 +152,8 @@ const AddModal: React.FC = () => {
     }
 
     function onModalClose(): void {
-        setIsModalOpen(false);
+        if (isModalOpen) setIsModalOpen(false);
+        if (isSearchModalOpen) setIsSearchModalOpen(false);
     }
 
     // styles
@@ -234,7 +235,6 @@ const AddModal: React.FC = () => {
                     </Button>
                 </form>
             </section>
-            <div className={`addModalBackground ${isModalOpen ? "" : "disable"}`} onClick={onModalClose}></div>
         </>
     );
 };
