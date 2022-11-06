@@ -9,7 +9,7 @@
   left: 50%;
   transform: translate(-50%);
   top: 0;
-  border-radius: 26px;
+  border-radius: 20px;
   box-shadow: $shadow;
   padding: 11px;
   display: flex;
@@ -54,6 +54,17 @@
 
 .searchingItemSection:hover {
   box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 3px;
+}
+
+.searchTime {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  h4 {
+    margin: 0 5px 0 5px;
+    font-size: 14px;
+  }
 }
 
 

@@ -64,6 +64,14 @@ const SearchingModal: React.FC = () => {
                         renderSearchingResult()
                     }
                 </div>
+                <div className="searchTime">
+                    <h4 style={inputStyle}>
+                        Search time
+                    </h4>
+                    <h4 style={inputStyle}>
+                        0.25s
+                    </h4>
+                </div>
             </section>
         </>
     );
