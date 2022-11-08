@@ -104,6 +104,11 @@ const SearchingModal: React.FC = () => {
         }
     }
 
+    function onCheckboxChange(): void {
+        setCheckboxValue(!checkboxValue);
+        if (inputRef.current) inputRef.current.focus();
+    }
+
     useEffect(() => {
         if (isSearchModalOpen) {
             if (inputRef.current) inputRef.current.focus();
@@ -133,7 +138,7 @@ const SearchingModal: React.FC = () => {
                             <h4>
                                 DFS
                             </h4>
-                            <AntSwitch value={checkboxValue} onChange={() => setCheckboxValue(!checkboxValue)}/>
+                            <AntSwitch value={checkboxValue} onChange={onCheckboxChange}/>
                             <h4>
                                 BFS
                             </h4>
