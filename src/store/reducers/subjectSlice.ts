@@ -21,7 +21,7 @@ const initialState: SubjectState = {
     randomColor: {backgroundColor: "", fontColor: "", _id: ""},
     isModalOpen: false,
     isDeleteMode: false,
-    isSearchModalOpen: true
+    isSearchModalOpen: false
 };
 
 const SubjectSlice = createSlice({

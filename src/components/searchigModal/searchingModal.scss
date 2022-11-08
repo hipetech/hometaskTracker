@@ -81,18 +81,30 @@
 }
 
 .searchTime {
-  width: 100%;
+  width: 98%;
   height: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
   margin-bottom: 8px;
-  padding-right: 12px;
+  margin-right: 11px;
 
   h4 {
-    margin: 0 5px 0 5px;
+    margin: 0;
     font-size: 14px;
+  }
+
+  div:first-child {
+    width: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  div:last-child {
+    width: 96px;
   }
 }
 
