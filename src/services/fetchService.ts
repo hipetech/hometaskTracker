@@ -3,6 +3,8 @@ import Color from "../types/Color";
 import config from "./config.json";
 import Task from "../types/Task";
 import TaskStatus from "../types/TaskStatus";
+import {SearchType} from "../types/SearchType";
+import {SearchResult} from "../types/SearchResult";
 
 interface postSubjectDTO {
     name: string,
@@ -17,6 +19,11 @@ interface postTaskDTO {
     name: string,
     status: TaskStatus,
     subject: string
+}
+
+interface postSearchQueryDTO {
+    term: string,
+    searchType: SearchType
 }
 
 interface deleteTaskDTO {
@@ -90,6 +97,10 @@ export default class FetchService {
 
     public async postTask(body: postTaskDTO): Promise<Task> {
         return await this.postResource(`${this.url}/task`, body);
+    }
+
+    public async postSearchQuery(body: postSearchQueryDTO): Promise<SearchResult[]> {
+        return await this.postResource(`${this.url}/search`, body);
     }
 
     // delete

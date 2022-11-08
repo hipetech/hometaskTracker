@@ -2,8 +2,9 @@
 
 .searchingModalSection {
   position: absolute;
-  width: 75%;
-  min-height: 150px;
+  width: 76%;
+  min-height: 75px;
+  max-height: 750px;
   background-color: $accentColor;
   z-index: 4;
   left: 50%;
@@ -11,7 +12,7 @@
   top: 0;
   border-radius: 20px;
   box-shadow: $shadow;
-  padding: 11px;
+  padding: 11px 0 0 11px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,9 +23,11 @@
     border: none;
     border-bottom: 1.5px #ababab solid;
     font-size: 20px;
+    font-weight: 700;
     background-color: $accentColor;
     padding-top: 6px;
     padding-bottom: 6px;
+    margin-right: 11px;
   }
 
   input:focus {
@@ -34,13 +37,34 @@
 
 .searchingResult {
   width: 100%;
+  overflow-y: scroll;
+
+  h4 {
+    width: 100%;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+  }
+}
+
+.searchingResult::-webkit-scrollbar {
+  width: 11px;
+}
+
+.searchingResult::-webkit-scrollbar-thumb {
+  background-color: #cecece;
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  background-clip: content-box;
+  border-radius: 5px;
+  width: 5px;
 }
 
 .searchingItemSection {
-  width: 100%;
+  width: 99.9%;
   height: 45px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 8px auto;
   display: flex;
   align-items: center;
   border-radius: 9px;
@@ -53,13 +77,18 @@
 }
 
 .searchingItemSection:hover {
-  box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 3px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 2px;
 }
 
 .searchTime {
   width: 100%;
+  height: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-right: 12px;
 
   h4 {
     margin: 0 5px 0 5px;
