@@ -32,7 +32,6 @@ const SubjectsHeading: React.FC = () => {
 
     function onSearchButtonClick(): void {
         setIsSearchModalOpen(!isSearchModalOpen);
-        console.log(isSearchModalOpen);
     }
 
     return (
