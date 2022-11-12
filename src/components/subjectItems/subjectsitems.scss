@@ -1,3 +1,10 @@
+.subjectItemsCaption {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 65px;
+
+}
 .subjectItemsSection {
   display: grid;
   grid-template-columns: repeat(3, 440px);

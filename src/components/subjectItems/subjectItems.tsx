@@ -5,7 +5,7 @@ import SubjectItem from "../subjectItem/subjectItem";
 import {useAppSelector} from "../../hooks/useAppSelector";
 
 const SubjectItems: React.FC = () => {
-    const {subjects, searchingValue} = useAppSelector(state => state.subject);
+    const {subjects, searchingValue, randomColor} = useAppSelector(state => state.subject);
 
     function filterBySearchValue(): Subject[] {
         return subjects.filter((subject: Subject) => {
@@ -22,9 +22,14 @@ const SubjectItems: React.FC = () => {
 
     return (
         <>
+            <section className="subjectItemsCaption">
+                {
+                    subjects.length ? null : <h2 style={{color: randomColor.fontColor}}>There is no subjects</h2>
+                }
+            </section>
             <section className="subjectItemsSection">
                 {
-                    renderSubjectItems()
+                    subjects.length ? renderSubjectItems(): null
                 }
             </section>
         </>
