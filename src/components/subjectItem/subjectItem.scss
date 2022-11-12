@@ -149,3 +149,17 @@
   backdrop-filter: blur(1.5px);
 }
 
+@media only screen and (max-width: 1350px) {
+  .subjectItemSection {
+    width: 48.1%;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .subjectItemSection {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 15px;
+  }
+}
+
