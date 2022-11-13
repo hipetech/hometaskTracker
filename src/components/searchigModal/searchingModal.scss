@@ -27,7 +27,6 @@
     background-color: $accentColor;
     padding-top: 6px;
     padding-bottom: 6px;
-    margin-right: 11px;
   }
 
   input:focus {
@@ -106,6 +105,13 @@
   div:last-child {
     width: 96px;
   }
+}
+
+.searchInputBox {
+  width: 99%;
+  padding-right: 12px;
+  display: flex;
+  justify-content: center;
 }
 
 

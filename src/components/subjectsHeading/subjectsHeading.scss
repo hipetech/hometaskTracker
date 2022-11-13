@@ -12,6 +12,7 @@
 
   h1 {
     margin: 0 0 0 25px;
+    margin-right: 15px;
   }
 }
 
@@ -55,6 +56,7 @@
   padding-left: 13px;
   padding-right: 13px;
   border-right: 0;
+  position: relative;
 }
 
 .searchButtonCircle {
@@ -74,5 +76,36 @@
   position: absolute;
   top: 36px;
   right: 20px;
+}
+
+@media only screen and (max-width: 980px) {
+
+  .subjectsHeading {
+    h1 {
+      font-size: 19px;
+    }
+  }
+
+  .subjectsHeadingButton {
+    button {
+      font-size: 18px;
+    }
+  }
+
+  .addButton {
+    width: 65px;
+  }
+
+  .removeButton {
+    width: 80px;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .subjectsHeading {
+    h1 {
+      font-size: 15px;
+    }
+  }
 }
 

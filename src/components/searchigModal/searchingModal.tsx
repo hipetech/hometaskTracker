@@ -120,8 +120,10 @@ const SearchingModal: React.FC = () => {
     return (
         <>
             <section className={"searchingModalSection"}>
-                <input type="text" placeholder={"Searching..."} style={inputStyle} ref={inputRef}
-                       onChange={postSearchQueryOnInputChange}/>
+                <div className="searchInputBox">
+                    <input type="text" placeholder={"Searching..."} style={inputStyle} ref={inputRef}
+                           onChange={postSearchQueryOnInputChange}/>
+                </div>
                 <div className="searchingResult">
                     {
                         searchResult.length ? renderSearchingResult() : null
