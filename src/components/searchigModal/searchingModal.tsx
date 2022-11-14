@@ -106,6 +106,7 @@ const SearchingModal: React.FC = () => {
 
     function onCheckboxChange(): void {
         setCheckboxValue(!checkboxValue);
+        localStorage.setItem("searchType", String(!checkboxValue));
         if (inputRef.current) inputRef.current.focus();
     }
 
@@ -116,6 +117,10 @@ const SearchingModal: React.FC = () => {
             if (inputRef.current) inputRef.current.blur();
         }
     }, [isSearchModalOpen]);
+
+    useEffect(() => {
+        setCheckboxValue(Boolean(localStorage.getItem("searchType")));
+    }, []);
 
     return (
         <>
@@ -140,7 +145,7 @@ const SearchingModal: React.FC = () => {
                             <h4>
                                 DFS
                             </h4>
-                            <AntSwitch value={checkboxValue} onChange={onCheckboxChange}/>
+                            <AntSwitch value={checkboxValue} onChange={onCheckboxChange} checked={checkboxValue}/>
                             <h4>
                                 BFS
                             </h4>
